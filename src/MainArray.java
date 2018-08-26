@@ -49,6 +49,9 @@ public class MainArray {
                     break;
                 case "exit":
                     return;
+                case "update":
+                    ARRAY_STORAGE.update(ARRAY_STORAGE.get(uuid));
+                    return;
                 default:
                     System.out.println("Неверная команда.");
                     break;
