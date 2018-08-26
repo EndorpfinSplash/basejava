@@ -30,7 +30,7 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        Integer position = getPosition(uuid);
+        int position = getPosition(uuid);
 
         if (position == -1) {
             System.out.println(RESUME_ABSENT);
@@ -39,7 +39,7 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        Integer position = getPosition(uuid);
+        int position = getPosition(uuid);
 
         if (position == -1) {
             System.out.println(RESUME_ABSENT);
@@ -54,7 +54,7 @@ public class ArrayStorage {
             return;
         }
 
-        Integer position = getPosition(resume.getUuid());
+        int position = getPosition(resume.getUuid());
         storage[position] = resume;
     }
 
