@@ -1,16 +1,16 @@
+import java.util.Arrays;
+
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    String RESUME_ABSENT = "Such resume is absent";
-    Resume[] storage = new Resume[10000];
 
+    private String RESUME_ABSENT = "Such resume is absent";
+    private Resume[] storage = new Resume[10000];
     private int quantityOfElements = 0;
 
     void clear() {
-        for (int i = 0; i < quantityOfElements; i++) {
-            storage[i] = null;
-        }
+        Arrays.fill(storage, 0, quantityOfElements, null);
         quantityOfElements = 0;
     }
 
@@ -30,29 +30,25 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-
         Integer position = getPosition(uuid);
 
-        if (position == null) {
+        if (position == -1) {
             System.out.println(RESUME_ABSENT);
-
         } else return storage[position];
         return null;
     }
 
     void delete(String uuid) {
-
         Integer position = getPosition(uuid);
 
-        if (position == null) {
+        if (position == -1) {
             System.out.println(RESUME_ABSENT);
         } else storage[position] = storage[quantityOfElements - 1];
-        quantityOfElements--;
 
+        quantityOfElements--;
     }
 
     void update(Resume resume) {
-
         if (!isResumeExist(resume)) {
             System.out.println(RESUME_ABSENT);
             return;
@@ -62,29 +58,24 @@ public class ArrayStorage {
         storage[position] = resume;
     }
 
-    Integer getPosition(String uuid) {
+    int getPosition(String uuid) {
         for (int i = 0; i < quantityOfElements; i++) {
-            if (uuid.equals(storage[i])) {
+            if (uuid.equals(storage[i].getUuid())) {
                 return i;
             }
         }
-        return null;
+        return -1;
     }
 
     Boolean isResumeExist(Resume resume) {
-        return getPosition(resume.getUuid()) == null ? false : true;
+        return getPosition(resume.getUuid()) != -1;
     }
 
     /**
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-
-        Resume[] resumes = new Resume[quantityOfElements];
-        for (int i = 0; i < quantityOfElements; i++) {
-            resumes[i] = storage[i];
-        }
-        return resumes;
+        return Arrays.copyOf(storage, quantityOfElements);
     }
 
     int size() {
