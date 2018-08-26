@@ -14,8 +14,8 @@ public class ArrayStorage {
         quantityOfElements = 0;
     }
 
-    void save(Resume r) {
-        if (getPosition(r.getUuid() )!= -1) {
+    void save(Resume resume) {
+        if (getPosition(resume.getUuid()) != -1) {
             System.out.println("Resume already exist");
             return;
         }
@@ -25,7 +25,7 @@ public class ArrayStorage {
             return;
         }
 
-        storage[quantityOfElements] = r;
+        storage[quantityOfElements] = resume;
         quantityOfElements++;
     }
 
@@ -35,9 +35,8 @@ public class ArrayStorage {
         if (position == -1) {
             System.out.println(RESUME_ABSENT);
             return null;
-        } else {
-            return storage[position];
         }
+        return storage[position];
     }
 
     void delete(String uuid) {
@@ -47,6 +46,7 @@ public class ArrayStorage {
             System.out.println(RESUME_ABSENT);
         } else {
             storage[position] = storage[quantityOfElements - 1];
+            storage[quantityOfElements] = null;
             quantityOfElements--;
         }
     }
@@ -60,7 +60,7 @@ public class ArrayStorage {
         storage[position] = resume;
     }
 
-    int getPosition(String uuid) {
+    private int getPosition(String uuid) {
         for (int i = 0; i < quantityOfElements; i++) {
             if (uuid.equals(storage[i].getUuid())) {
                 return i;
