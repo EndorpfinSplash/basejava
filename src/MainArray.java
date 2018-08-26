@@ -47,10 +47,10 @@ public class MainArray {
                     ARRAY_STORAGE.clear();
                     printAll();
                     break;
-                case "exit":
-                    return;
                 case "update":
                     ARRAY_STORAGE.update(ARRAY_STORAGE.get(uuid));
+                    break;
+                case "exit":
                     return;
                 default:
                     System.out.println("Неверная команда.");
