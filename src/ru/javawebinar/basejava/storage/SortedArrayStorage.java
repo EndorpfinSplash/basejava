@@ -15,7 +15,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void removeElement(int index) {
-        System.out.println(index);
         System.arraycopy(storage,index+1,storage,index,size-index-1);
     }
 
