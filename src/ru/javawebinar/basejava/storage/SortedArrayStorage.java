@@ -7,21 +7,9 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void saveElement(Resume resume) {
-        int indexForSave = 0;
+    public void saveElement(Resume resume, int index) {
+        int indexForSave = index * (-1) - 1;
 
-        String uuid = resume.getUuid();
-        for (int i = 0; i < size; i++) {
-            if (uuid.compareTo(storage[i].getUuid()) < 0) {
-                indexForSave = i;
-                break;
-            } else {
-                storage[size++] = resume;
-                return;
-            }
-        }
-
-        size++;
         for (int i = size; i > indexForSave; i--) {
             storage[i] = storage[i - 1];
         }
@@ -29,11 +17,10 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void removeElement(int position) {
-        for (int i = position; i < size - 1; i++) {
+    protected void removeElement(int index) {
+        for (int i = index; i < size - 1; i++) {
             storage[i] = storage[i + 1];
         }
-        storage[size - 1] = null;
     }
 
     @Override
