@@ -1,5 +1,8 @@
 package ru.javawebinar.basejava.storage;
 
+import ru.javawebinar.basejava.exceptions.ExistStorageException;
+import ru.javawebinar.basejava.exceptions.NotExistStorageException;
+import ru.javawebinar.basejava.exceptions.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
@@ -18,8 +21,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index < 0) {
-            System.out.println("Resume " + resume.getUuid() + " not exist");
-            return;
+            throw new NotExistStorageException(resume.getUuid());
         }
         storage[index] = resume;
     }
@@ -38,8 +40,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("Resume " + uuid + " not exist");
-            return null;
+            throw new NotExistStorageException(uuid);
         }
         return storage[index];
     }
@@ -48,7 +49,8 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = getIndex(uuid);
 
         if (index < 0) {
-            System.out.println("Resume " + uuid + " not exist");
+            throw new NotExistStorageException(uuid);
+
         } else {
             removeElement(index);
             storage[size - 1] = null;
@@ -62,13 +64,11 @@ public abstract class AbstractArrayStorage implements Storage {
     public void save(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index > -1) {
-            System.out.println("Resume already exist");
-            return;
+            throw new ExistStorageException(resume.getUuid());
         }
 
         if (size >= storage.length) {
-            System.out.println("Storage of resume is full");
-            return;
+            throw new StorageException("Storage limit overflow", resume.getUuid());
         }
 
         saveElement(resume, index);
