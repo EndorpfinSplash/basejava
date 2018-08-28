@@ -12,14 +12,14 @@ public abstract class AbstractArrayStorageTest {
 
     protected Storage storage;
 
-    public AbstractArrayStorageTest(Storage storage) {
+    protected AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
     }
 
-    protected static final String UUID_1 = "uuid1";
-    protected static final String UUID_2 = "uuid2";
-    protected static final String UUID_3 = "uuid3";
-    protected static final Resume[] TEST_RESUMES_ARRAY = new Resume[]{new Resume(UUID_1), new Resume(UUID_2), new Resume(UUID_3)};
+    private static final String UUID_1 = "uuid1";
+    private static final String UUID_2 = "uuid2";
+    private static final String UUID_3 = "uuid3";
+    private static final Resume[] TEST_RESUMES_ARRAY = new Resume[]{new Resume(UUID_1), new Resume(UUID_2), new Resume(UUID_3)};
 
     @Before
     public void setUp() throws Exception {
@@ -27,7 +27,6 @@ public abstract class AbstractArrayStorageTest {
         storage.save(new Resume(UUID_1));
         storage.save(new Resume(UUID_2));
         storage.save(new Resume(UUID_3));
-        System.out.println("Before actions completed");
     }
 
     @Test
