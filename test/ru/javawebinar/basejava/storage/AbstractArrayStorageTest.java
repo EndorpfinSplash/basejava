@@ -39,7 +39,7 @@ public abstract class AbstractArrayStorageTest {
     public void update() {
         Resume resume = new Resume(UUID_2);
         storage.update(resume);
-        Assert.assertEquals(resume, storage.getStorage()[1]);
+        Assert.assertEquals(resume, storage.get(UUID_2));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -51,7 +51,7 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void getAll() {
         Resume[] resume = this.storage.getAll();
-        Assert.assertEquals(resume, TEST_RESUMES_ARRAY);
+        Assert.assertArrayEquals(resume, TEST_RESUMES_ARRAY);
     }
 
     @Test
@@ -61,8 +61,9 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void get() {
+        Resume testResume = new Resume(UUID_1);
         Resume resume = storage.get(UUID_1);
-        Assert.assertEquals(resume, this.storage.getStorage()[0]);
+        Assert.assertEquals(testResume, resume);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -91,8 +92,13 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = StorageException.class)
     public void saveOverLimit() {
-        for (int i = 3; i <= storage.size(); i++) {
-            storage.save(new Resume(Integer.toString(i)));
+        System.out.println(this.storage.size());
+        try {
+            for (int i = 3; i < AbstractArrayStorage.STORAGE_LIMIT ; i++) {
+                this.storage.save(new Resume());
+            }
+        } catch (StorageException e) {
+            Assert.fail();
         }
         storage.save(new Resume());
     }
