@@ -17,8 +17,11 @@ public abstract class AbstractArrayStorageTest {
     }
 
     private static final String UUID_1 = "uuid1";
+    public static final Resume RESUME_1 = new Resume(UUID_1);
     private static final String UUID_2 = "uuid2";
+    public static final Resume RESUME_2 = new Resume(UUID_2);
     private static final String UUID_3 = "uuid3";
+    public static final Resume RESUME_3 = new Resume(UUID_3);
     private static final Resume[] TEST_RESUMES_ARRAY = new Resume[]{new Resume(UUID_1), new Resume(UUID_2), new Resume(UUID_3)};
 
     @Before
@@ -37,9 +40,8 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void update() {
-        Resume resume = new Resume(UUID_2);
-        storage.update(resume);
-        Assert.assertEquals(resume, storage.get(UUID_2));
+        storage.update(RESUME_2);
+        Assert.assertTrue(RESUME_2 == storage.get(UUID_2));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -61,9 +63,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void get() {
-        Resume testResume = new Resume(UUID_1);
-        Resume resume = storage.get(UUID_1);
-        Assert.assertEquals(testResume, resume);
+        Assert.assertEquals(RESUME_1, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -105,7 +105,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = ExistStorageException.class)
     public void saveExisted() {
-        storage.save(new Resume(UUID_3));
+        storage.save(RESUME_3);
     }
 
 }
