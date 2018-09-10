@@ -9,15 +9,20 @@ public class ListStorage extends AbstractStorage
 {
     private List<Resume> storage = new LinkedList<>();
 
-    @Override
-    public void clear() {
-        storage.clear();
 
+    @Override
+    protected void floodNull() {
+        storage.clear();
     }
 
     @Override
-    public void update(Resume r) {
-        storage.set(storage.indexOf(r), r);
+    protected boolean isExist(Resume resume) {
+        return storage.contains(resume);
+    }
+
+    @Override
+    protected void updateExistedElement(Resume resume) {
+        storage.set(storage.indexOf(resume), resume);
     }
 
     @Override
@@ -44,8 +49,4 @@ public class ListStorage extends AbstractStorage
         return resumes;
     }
 
-    @Override
-    public int size() {
-        return size;
-    }
 }

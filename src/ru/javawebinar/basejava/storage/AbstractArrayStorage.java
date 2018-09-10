@@ -11,17 +11,18 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
 
-    public void clear() {
+    public void floodNull() {
         Arrays.fill(storage, 0, size, null);
-        size = 0;
     }
 
-    public void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index < 0) {
-            throw new NotExistStorageException(resume.getUuid());
-        }
-        storage[index] = resume;
+    @Override
+    protected boolean isExist(Resume resume) {
+        return getIndex(resume.getUuid()) > -1;
+    }
+
+    @Override
+    protected void updateExistedElement(Resume resume) {
+        storage[getIndex(resume.getUuid())] = resume;
     }
 
     /**
@@ -31,9 +32,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOf(storage, size);
     }
 
-    public int size() {
-        return size;
-    }
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
@@ -76,4 +74,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected abstract void saveElement(Resume resume, int index);
 
     protected abstract int getIndex(String uuid);
+
+
 }
