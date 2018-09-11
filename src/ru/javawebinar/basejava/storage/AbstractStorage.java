@@ -1,6 +1,8 @@
 package ru.javawebinar.basejava.storage;
 
+import ru.javawebinar.basejava.exceptions.ExistStorageException;
 import ru.javawebinar.basejava.exceptions.NotExistStorageException;
+import ru.javawebinar.basejava.exceptions.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
@@ -16,7 +18,7 @@ public abstract class AbstractStorage implements Storage {
     protected abstract void floodNull();
 
     @Override
-    public void update(Resume resume){
+    public void update(Resume resume) {
         if (isExist(resume)) {
             updateExistedElement(resume);
         } else {
@@ -34,4 +36,21 @@ public abstract class AbstractStorage implements Storage {
         return size;
     }
 
+    @Override
+    public void save(Resume resume) {
+        if (isExist(resume)) {
+            throw new ExistStorageException(resume.getUuid());
+        }
+
+        if (size >= getStorageLength()) {
+            throw new StorageException("Storage limit overflow", resume.getUuid());
+        }
+
+         saveElement(resume);
+        size++;
+    }
+
+    protected abstract void saveElement(Resume resume);
+
+    protected abstract int getStorageLength();
 }
