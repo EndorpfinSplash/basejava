@@ -45,6 +45,11 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
+    protected void removeElement(String uuid) {
+        storageMap.remove(uuid);
+    }
+
+    @Override
     public Resume[] getAll() {
         return storageMap.values().toArray(new Resume[size]);
     }

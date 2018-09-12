@@ -41,17 +41,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return storage[index];
     }
 
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-
-        } else {
-            removeElement(index);
-            storage[size - 1] = null;
-            size--;
-        }
+    @Override
+    protected void removeElement(String uuid) {
+        removeElement(getIndex(uuid));
+        storage[size - 1] = null;
     }
 
     protected abstract void removeElement(int index);

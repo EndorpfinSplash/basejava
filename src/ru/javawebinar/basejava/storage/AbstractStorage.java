@@ -55,4 +55,17 @@ public abstract class AbstractStorage implements Storage {
     protected abstract int getStorageLength();
 
 
+    @Override
+    public void delete(String uuid) {
+
+        if (!isExist(new Resume(uuid))) {
+            throw new NotExistStorageException(uuid);
+
+        } else {
+            removeElement(uuid);
+            size--;
+        }
+    }
+
+    protected abstract void removeElement(String uuid);
 }
