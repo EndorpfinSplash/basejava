@@ -75,5 +75,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected abstract int getIndex(String uuid);
 
+    @Override
+    protected int getStorageLength() {
+        return storage.length;
+    }
 
+    @Override
+    protected void saveElement(Resume resume) {
+        saveElement(resume,  getIndex(resume.getUuid()));
+    }
 }

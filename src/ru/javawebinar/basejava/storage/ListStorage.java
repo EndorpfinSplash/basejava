@@ -31,6 +31,16 @@ public class ListStorage extends AbstractStorage
     }
 
     @Override
+    protected void saveElement(Resume resume) {
+        storage.add(resume);
+    }
+
+    @Override
+    protected int getStorageLength() {
+        return storage.size();
+    }
+
+    @Override
     public Resume get(String uuid) {
         return storage.get(storage.indexOf(new Resume(uuid)));
     }

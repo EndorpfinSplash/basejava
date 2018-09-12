@@ -25,6 +25,16 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
+    protected void saveElement(Resume resume) {
+        storageMap.put(resume.getUuid(), resume);
+    }
+
+    @Override
+    protected int getStorageLength() {
+        return storageMap.size();
+    }
+
+    @Override
     public Resume get(String uuid) {
         return null;
     }
