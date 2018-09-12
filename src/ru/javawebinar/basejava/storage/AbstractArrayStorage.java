@@ -21,6 +21,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
+    protected Resume getFromStorage(String uuid) {
+        return storage[getIndex(uuid)];
+    }
+
+    @Override
     protected void updateExistedElement(Resume resume) {
         storage[getIndex(resume.getUuid())] = resume;
     }
@@ -32,14 +37,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOf(storage, size);
     }
 
-
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        return storage[index];
-    }
 
     @Override
     protected void removeElement(String uuid) {

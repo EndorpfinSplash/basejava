@@ -40,6 +40,11 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
+    protected Resume getFromStorage(String uuid) {
+        return storageMap.get(uuid);
+    }
+
+    @Override
     public void delete(String uuid) {
 
     }

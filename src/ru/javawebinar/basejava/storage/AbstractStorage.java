@@ -37,6 +37,17 @@ public abstract class AbstractStorage implements Storage {
     }
 
 
+    @Override
+    public Resume get(String uuid) {
+        if (!isExist(new Resume(uuid))) {
+            throw new NotExistStorageException(uuid);
+        }
+        return getFromStorage(uuid);
+    }
+
+    protected abstract Resume getFromStorage(String uuid);
+
+
     public void save(Resume resume) {
         if (isExist(resume)) {
             throw new ExistStorageException(resume.getUuid());
