@@ -93,7 +93,6 @@ public class AbstractStorageTest {
 
     @Test(expected = StorageException.class)
     public void saveOverLimit() {
-        System.out.println(this.storage.size());
         try {
             for (int i = 3; i < AbstractStorage.STORAGE_LIMIT; i++) {
                 this.storage.save(new Resume());
