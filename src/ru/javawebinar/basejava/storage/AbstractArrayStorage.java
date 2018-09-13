@@ -1,6 +1,8 @@
 package ru.javawebinar.basejava.storage;
 
+import ru.javawebinar.basejava.exceptions.ExistStorageException;
 import ru.javawebinar.basejava.exceptions.NotExistStorageException;
+import ru.javawebinar.basejava.exceptions.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
@@ -19,10 +21,14 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
+    protected Resume getFromStorage(String uuid) {
+        return storage[getIndex(uuid)];
+    }
+
+    @Override
     protected void updateExistedElement(Resume resume) {
         storage[getIndex(resume.getUuid())] = resume;
     }
-
 
     /**
      * @return array, contains only Resumes in storage (without null)
@@ -33,40 +39,39 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
 
     @Override
-    protected int getStorageLength() {
-        return storage.length;
-    }
-
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        return storage[index];
-    }
-
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-
-        } else {
-            removeElement(index);
-            storage[size - 1] = null;
-            size--;
-        }
+    protected void removeElement(String uuid) {
+        removeElement(getIndex(uuid));
+        storage[size - 1] = null;
     }
 
     protected abstract void removeElement(int index);
 
+
+    public void save(Resume resume) {
+        int index = getIndex(resume.getUuid());
+        if (index > -1) {
+            throw new ExistStorageException(resume.getUuid());
+        }
+
+        if (size >= storage.length) {
+            throw new StorageException("Storage limit overflow", resume.getUuid());
+        }
+
+        saveElement(resume, index);
+        size++;
+    }
 
     protected abstract void saveElement(Resume resume, int index);
 
     protected abstract int getIndex(String uuid);
 
     @Override
+    protected int getStorageLength() {
+        return storage.length;
+    }
+
+    @Override
     protected void saveElement(Resume resume) {
-        saveElement(resume, getIndex(resume.getUuid()));
+        saveElement(resume,  getIndex(resume.getUuid()));
     }
 }

@@ -46,7 +46,17 @@ public class ListStorage extends AbstractStorage
     }
 
     @Override
+    protected Resume getFromStorage(String uuid) {
+        return storage.get(storage.indexOf(new Resume(uuid)));
+    }
+
+    @Override
     public void delete(String uuid) {
+        storage.remove(new Resume(uuid));
+    }
+
+    @Override
+    protected void removeElement(String uuid) {
         storage.remove(new Resume(uuid));
     }
 
