@@ -17,6 +17,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void floodNull();
 
+
     @Override
     public void update(Resume resume) {
         if (isExist(resume)) {
@@ -27,9 +28,6 @@ public abstract class AbstractStorage implements Storage {
 
     }
 
-    protected abstract boolean isExist(Resume resume);
-
-    protected abstract void updateExistedElement(Resume resume);
 
     @Override
     public int size() {
@@ -61,8 +59,6 @@ public abstract class AbstractStorage implements Storage {
         size++;
     }
 
-    protected abstract void saveElement(Resume resume);
-
 
     @Override
     public void delete(String uuid) {
@@ -75,6 +71,12 @@ public abstract class AbstractStorage implements Storage {
             size--;
         }
     }
+
+    protected abstract void saveElement(Resume resume);
+
+    protected abstract boolean isExist(Resume resume);
+
+    protected abstract void updateExistedElement(Resume resume);
 
     protected abstract void removeElement(String uuid);
 }
