@@ -20,34 +20,16 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    public void save(Resume r) {
-
-    }
-
-    @Override
     protected void saveElement(Resume resume) {
         storageMap.put(resume.getUuid(), resume);
     }
 
-    @Override
-    protected int getStorageLength() {
-        return storageMap.size();
-    }
-
-    @Override
-    public Resume get(String uuid) {
-        return null;
-    }
 
     @Override
     protected Resume getFromStorage(String uuid) {
         return storageMap.get(uuid);
     }
 
-    @Override
-    public void delete(String uuid) {
-
-    }
 
     @Override
     protected void removeElement(String uuid) {

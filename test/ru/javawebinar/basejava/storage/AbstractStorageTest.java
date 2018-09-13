@@ -8,11 +8,12 @@ import ru.javawebinar.basejava.exceptions.NotExistStorageException;
 import ru.javawebinar.basejava.exceptions.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-public abstract class AbstractArrayStorageTest extends AbstractStorageTest{
+public class AbstractStorageTest {
 
+    protected Storage storage;
 
-    protected AbstractArrayStorageTest(Storage storage) {
-        super(storage);
+    protected AbstractStorageTest(Storage storage) {
+        this.storage = storage;
     }
 
     private static final String UUID_1 = "uuid1";
@@ -87,13 +88,14 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest{
         Resume testResume = new Resume(testResumeUuid);
         storage.save(testResume);
         Assert.assertEquals(testResume, storage.get(testResumeUuid));
+        Assert.assertEquals(4, storage.size());
     }
 
     @Test(expected = StorageException.class)
     public void saveOverLimit() {
         System.out.println(this.storage.size());
         try {
-            for (int i = 3; i < AbstractArrayStorage.STORAGE_LIMIT ; i++) {
+            for (int i = 3; i < AbstractStorage.STORAGE_LIMIT; i++) {
                 this.storage.save(new Resume());
             }
         } catch (StorageException e) {
@@ -106,5 +108,4 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest{
     public void saveExisted() {
         storage.save(RESUME_3);
     }
-
 }

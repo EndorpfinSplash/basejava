@@ -18,7 +18,7 @@ public abstract class AbstractStorage implements Storage {
     protected abstract void floodNull();
 
     @Override
-    public void update(Resume resume){
+    public void update(Resume resume) {
         if (isExist(resume)) {
             updateExistedElement(resume);
         } else {
@@ -53,7 +53,7 @@ public abstract class AbstractStorage implements Storage {
             throw new ExistStorageException(resume.getUuid());
         }
 
-        if (size >= getStorageLength()) {
+        if (size >= AbstractStorage.STORAGE_LIMIT) {
             throw new StorageException("Storage limit overflow", resume.getUuid());
         }
 
@@ -62,8 +62,6 @@ public abstract class AbstractStorage implements Storage {
     }
 
     protected abstract void saveElement(Resume resume);
-
-    protected abstract int getStorageLength();
 
 
     @Override
