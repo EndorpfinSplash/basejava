@@ -5,10 +5,9 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.javawebinar.basejava.exceptions.ExistStorageException;
 import ru.javawebinar.basejava.exceptions.NotExistStorageException;
-import ru.javawebinar.basejava.exceptions.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-public class AbstractStorageTest {
+public abstract class AbstractStorageTest {
 
     protected Storage storage;
 
@@ -91,17 +90,6 @@ public class AbstractStorageTest {
         Assert.assertEquals(4, storage.size());
     }
 
-    @Test(expected = StorageException.class)
-    public void saveOverLimit() {
-        try {
-            for (int i = 3; i < AbstractStorage.STORAGE_LIMIT; i++) {
-                this.storage.save(new Resume());
-            }
-        } catch (StorageException e) {
-            Assert.fail();
-        }
-        storage.save(new Resume());
-    }
 
     @Test(expected = ExistStorageException.class)
     public void saveExisted() {

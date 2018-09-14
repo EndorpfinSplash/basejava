@@ -1,20 +1,29 @@
 package ru.javawebinar.basejava.storage;
 
+import ru.javawebinar.basejava.exceptions.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
+    static final int STORAGE_LIMIT = 10000;
+    int size = 0;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
 
     public void floodNull() {
         Arrays.fill(storage, 0, size, null);
+        size =0;
     }
 
     @Override
-    protected boolean isExist(Resume resume) {
-        return getIndex(resume.getUuid()) > -1;
+    public int size() {
+        return size;
+    }
+
+    @Override
+    protected boolean isExist(String uuid) {
+        return getIndex(uuid) > -1;
     }
 
     @Override
@@ -23,8 +32,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateExistedElement(Resume resume) {
-        storage[getIndex(resume.getUuid())] = resume;
+    protected void updateExistedElement(String uuid, Resume resume) {
+        storage[getIndex(uuid)] = resume;
     }
 
     /**
@@ -39,18 +48,21 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected void removeElement(String uuid) {
         removeElement(getIndex(uuid));
         storage[size - 1] = null;
+        size--;
+    }
+
+    @Override
+    protected void saveElement(Resume resume) {
+        if (size >= AbstractArrayStorage.STORAGE_LIMIT) {
+            throw new StorageException("Storage limit overflow", resume.getUuid());
+        }
+        saveElement(resume, getIndex(resume.getUuid()));
+        size++;
     }
 
     protected abstract void removeElement(int index);
 
-
     protected abstract void saveElement(Resume resume, int index);
 
     protected abstract int getIndex(String uuid);
-
-
-    @Override
-    protected void saveElement(Resume resume) {
-        saveElement(resume, getIndex(resume.getUuid()));
-    }
 }

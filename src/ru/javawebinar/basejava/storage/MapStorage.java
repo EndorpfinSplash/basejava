@@ -10,13 +10,13 @@ public class MapStorage extends AbstractStorage {
     private Map<String, Resume> storageMap = new HashMap<>();
 
     @Override
-    protected boolean isExist(Resume resume) {
-        return storageMap.containsValue(resume);
+    protected boolean isExist(String uuid) {
+        return storageMap.containsKey(uuid);
     }
 
     @Override
-    protected void updateExistedElement(Resume resume) {
-        storageMap.put(resume.getUuid(), resume);
+    protected void updateExistedElement(String uuid, Resume resume) {
+        storageMap.put(uuid, resume);
     }
 
     @Override
@@ -37,8 +37,13 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
+    public int size() {
+        return storageMap.size();
+    }
+
+    @Override
     public Resume[] getAll() {
-        return storageMap.values().toArray(new Resume[size]);
+        return storageMap.values().toArray(new Resume[size()]);
     }
 
     @Override

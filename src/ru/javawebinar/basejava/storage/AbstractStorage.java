@@ -2,17 +2,13 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.exceptions.ExistStorageException;
 import ru.javawebinar.basejava.exceptions.NotExistStorageException;
-import ru.javawebinar.basejava.exceptions.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
-    static final int STORAGE_LIMIT = 10000;
-    int size = 0;
 
     @Override
     public void clear() {
         floodNull();
-        size = 0;
     }
 
     protected abstract void floodNull();
@@ -20,8 +16,8 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void update(Resume resume) {
-        if (isExist(resume)) {
-            updateExistedElement(resume);
+        if (isExist(resume.getUuid())) {
+            updateExistedElement(resume.getUuid(), resume);
         } else {
             throw new NotExistStorageException(resume.getUuid());
         }
@@ -30,14 +26,8 @@ public abstract class AbstractStorage implements Storage {
 
 
     @Override
-    public int size() {
-        return size;
-    }
-
-
-    @Override
     public Resume get(String uuid) {
-        if (!isExist(new Resume(uuid))) {
+        if (!isExist(uuid)) {
             throw new NotExistStorageException(uuid);
         }
         return getFromStorage(uuid);
@@ -47,36 +37,29 @@ public abstract class AbstractStorage implements Storage {
 
 
     public void save(Resume resume) {
-        if (isExist(resume)) {
+        if (isExist(resume.getUuid())) {
             throw new ExistStorageException(resume.getUuid());
         }
-
-        if (size >= AbstractStorage.STORAGE_LIMIT) {
-            throw new StorageException("Storage limit overflow", resume.getUuid());
-        }
-
         saveElement(resume);
-        size++;
     }
 
 
     @Override
     public void delete(String uuid) {
 
-        if (!isExist(new Resume(uuid))) {
+        if (!isExist(uuid)) {
             throw new NotExistStorageException(uuid);
 
         } else {
             removeElement(uuid);
-            size--;
         }
     }
 
     protected abstract void saveElement(Resume resume);
 
-    protected abstract boolean isExist(Resume resume);
+    protected abstract boolean isExist(String uuid);
 
-    protected abstract void updateExistedElement(Resume resume);
+    protected abstract void updateExistedElement(String uuid, Resume resume);
 
     protected abstract void removeElement(String uuid);
 }
