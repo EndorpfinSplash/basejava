@@ -10,13 +10,13 @@ public class MapStorage extends AbstractStorage {
     private Map<String, Resume> storageMap = new HashMap<>();
 
     @Override
-    protected boolean isExist(String uuid) {
-        return storageMap.containsKey(uuid);
+    protected boolean isExist(Object searchKey) {
+        return storageMap.containsKey(searchKey);
     }
 
     @Override
-    protected void updateExistedElement(String uuid, Resume resume) {
-        storageMap.put(uuid, resume);
+    protected void updateElement(Object searchKey, Resume resume) {
+        storageMap.put((String) searchKey,resume);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected void floodNull() {
+    public void clear() {
         storageMap.clear();
     }
 }

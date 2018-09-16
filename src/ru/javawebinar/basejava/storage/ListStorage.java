@@ -10,18 +10,17 @@ public class ListStorage extends AbstractStorage {
 
 
     @Override
-    protected void floodNull() {
+    public void clear() {
         storage.clear();
     }
 
-    @Override
-    protected boolean isExist(String uuid) {
-        return storage.contains(new Resume(uuid));
+    protected boolean isExist(Object searchedKey) {
+        return (int) searchedKey > -1;
     }
 
     @Override
-    protected void updateExistedElement(String uuid, Resume resume) {
-        storage.set(storage.indexOf(resume), resume);
+    protected void updateElement(Object searchKey, Resume resume) {
+        storage.set((Integer) searchKey, resume);
     }
 
     @Override
@@ -49,7 +48,7 @@ public class ListStorage extends AbstractStorage {
         return storage.toArray(new Resume[size()]);
     }
 
-    private int getIndex(String uuid){
+    private int getIndex(String uuid) {
         return storage.indexOf(new Resume(uuid));
     }
 
