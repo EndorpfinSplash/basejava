@@ -11,6 +11,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
 
+    @Override
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
@@ -26,10 +27,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return (int) searchedKey > -1;
     }
 
+    @Override
     protected Resume getFromStorage(Object searchKey) {
         return storage[(int) searchKey];
     }
 
+    @Override
     protected void updateElement(Object searchedKey, Resume resume) {
         storage[(int) searchedKey] = resume;
     }
