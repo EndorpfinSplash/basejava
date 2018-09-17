@@ -32,7 +32,7 @@ public class MapStorage extends AbstractStorage {
 
 
     @Override
-    protected void removeElement(String uuid) {
+    protected void removeElement(Object uuid) {
         storageMap.remove(uuid);
     }
 

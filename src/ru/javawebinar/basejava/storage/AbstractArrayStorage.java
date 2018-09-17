@@ -13,7 +13,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
-        size =0;
+        size = 0;
     }
 
     @Override
@@ -23,11 +23,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(Object searchedKey) {
-        return (int)searchedKey > -1;
+        return (int) searchedKey > -1;
     }
 
-    protected Resume getFromStorage(Object uuid) {
-        return storage[(int) getSearchKey((String) uuid)];
+    protected Resume getFromStorage(Object searchKey) {
+        return storage[(int) searchKey];
     }
 
     protected void updateElement(Object searchedKey, Resume resume) {
@@ -43,8 +43,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
 
     @Override
-    protected void removeElement(String uuid) {
-        removeElement((Integer) getSearchKey(uuid));
+    protected void removeElement(Object searchKey) {
+        removeElement((int) searchKey);
         storage[size - 1] = null;
         size--;
     }

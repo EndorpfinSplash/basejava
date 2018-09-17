@@ -15,6 +15,9 @@ public class ListStorage extends AbstractStorage {
     }
 
     protected boolean isExist(Object searchedKey) {
+        if (searchedKey == null) {
+            return false;
+        }
         return (int) searchedKey > -1;
     }
 
@@ -35,21 +38,17 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected Resume getFromStorage(Object searchKey) {
-        return storage.get((Integer) searchKey);
+        return storage.get((int) searchKey);
     }
 
     @Override
-    protected void removeElement(String uuid) {
-        storage.remove(getIndex(uuid));
+    protected void removeElement(Object searchKey) {
+        storage.remove((int) searchKey);
     }
 
     @Override
     public Resume[] getAll() {
         return storage.toArray(new Resume[size()]);
-    }
-
-    private int getIndex(String uuid) {
-        return storage.indexOf(new Resume(uuid));
     }
 
     @Override
