@@ -32,7 +32,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Object getSearchKey(String uuid);
 
-    protected abstract Resume getFromStorage(Object uuid);
+    protected abstract Resume getFromStorage(Object searchKey);
 
 
     public void save(Resume resume) {

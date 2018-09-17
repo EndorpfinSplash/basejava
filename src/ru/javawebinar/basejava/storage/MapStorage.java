@@ -11,12 +11,12 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return storageMap.containsKey(searchKey);
+        return searchKey != null;
     }
 
     @Override
     protected void updateElement(Object searchKey, Resume resume) {
-        storageMap.put((String) searchKey,resume);
+        storageMap.put((String) searchKey, resume);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class MapStorage extends AbstractStorage {
 
 
     @Override
-    protected Resume getFromStorage(String uuid) {
+    protected Resume getFromStorage(Object uuid) {
         return storageMap.get(uuid);
     }
 
@@ -49,5 +49,10 @@ public class MapStorage extends AbstractStorage {
     @Override
     public void clear() {
         storageMap.clear();
+    }
+
+    @Override
+    protected Object getSearchKey(String uuid) {
+        return storageMap.containsKey(uuid) ? uuid : null;
     }
 }
