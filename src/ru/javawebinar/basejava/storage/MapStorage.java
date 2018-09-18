@@ -11,7 +11,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return searchKey != null;
+        return storageMap.containsKey(searchKey);
     }
 
     @Override
@@ -53,6 +53,6 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Object getSearchKey(String uuid) {
-        return storageMap.containsKey(uuid) ? uuid : null;
+        return uuid;
     }
 }
