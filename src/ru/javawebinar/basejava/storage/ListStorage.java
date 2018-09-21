@@ -23,7 +23,7 @@ public class ListStorage extends AbstractStorage {
         storage.set((Integer) searchKey, resume);
     }
 
-@Override
+    @Override
     public int size() {
         return storage.size();
     }

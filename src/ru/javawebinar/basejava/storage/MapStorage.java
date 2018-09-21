@@ -9,15 +9,17 @@ import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
 
-    protected Map<Object, Resume> storageMap = new HashMap<>();
+    protected Map<String, Resume> storageMap = new HashMap<>();
 
     @Override
     protected boolean isExist(Object searchKey) {
+        searchKey = checkSearchKeyType(searchKey);
         return storageMap.containsKey(searchKey);
     }
 
     @Override
     protected void updateElement(Object searchKey, Resume resume) {
+        searchKey = checkSearchKeyType(searchKey);
         storageMap.put((String) searchKey, resume);
     }
 
@@ -29,12 +31,14 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Resume getFromStorage(Object searchKey) {
+        searchKey = checkSearchKeyType(searchKey);
         return storageMap.get(searchKey);
     }
 
 
     @Override
     protected void removeElement(Object searchKey) {
+        searchKey = checkSearchKeyType(searchKey);
         storageMap.remove(searchKey);
     }
 
@@ -43,15 +47,15 @@ public class MapStorage extends AbstractStorage {
         return storageMap.size();
     }
 
+
 /*    @Override
     public Resume[] getAll() {
         return storageMap.values().toArray(new Resume[size()]);
     }*/
-
     @Override
     public List<Resume> getAllSorted() {
         List<Resume> resumeList = new ArrayList<>();
-        for (Map.Entry<Object,Resume> r : storageMap.entrySet()) {
+        for (Map.Entry<String, Resume> r : storageMap.entrySet()) {
             resumeList.add(r.getValue());
         }
         resumeList.sort(Resume::compareTo);
@@ -63,9 +67,16 @@ public class MapStorage extends AbstractStorage {
         storageMap.clear();
     }
 
-    @Override
-    protected String getSearchKey(String uuid) {
-        return uuid;
+
+    protected Object getSearchKey(String searchKey) {
+        return searchKey;
     }
 
+
+    private String checkSearchKeyType(Object searchKey) {
+        if (searchKey instanceof Resume) {
+            searchKey=((Resume) searchKey).getUuid();
+        }
+        return (String) searchKey;
+    }
 }
