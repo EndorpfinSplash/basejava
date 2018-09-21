@@ -48,10 +48,10 @@ public class MapStorage extends AbstractStorage {
     }
 
 
-/*    @Override
-    public Resume[] getAll() {
-        return storageMap.values().toArray(new Resume[size()]);
-    }*/
+    /*    @Override
+        public Resume[] getAll() {
+            return storageMap.values().toArray(new Resume[size()]);
+        }*/
     @Override
     public List<Resume> getAllSorted() {
         List<Resume> resumeList = new ArrayList<>();
@@ -74,9 +74,6 @@ public class MapStorage extends AbstractStorage {
 
 
     private Object checkSearchKeyType(Object searchKey) {
-        if (searchKey instanceof Resume) {
-            return ((Resume) searchKey).getUuid();
-        }
-        return searchKey;
+        return searchKey instanceof Resume ? ((Resume) searchKey).getUuid() : searchKey;
     }
 }
