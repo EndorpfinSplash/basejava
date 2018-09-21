@@ -6,8 +6,4 @@ public class MapStorageTest extends AbstractStorageTest {
         super(new MapStorage());
     }
 
-    @Override
-    public void getAll() {
-
-    }
 }

@@ -2,12 +2,14 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
 
-    private Map<String, Resume> storageMap = new HashMap<>();
+    protected Map<Object, Resume> storageMap = new HashMap<>();
 
     @Override
     protected boolean isExist(Object searchKey) {
@@ -26,14 +28,14 @@ public class MapStorage extends AbstractStorage {
 
 
     @Override
-    protected Resume getFromStorage(Object uuid) {
-        return storageMap.get(uuid);
+    protected Resume getFromStorage(Object searchKey) {
+        return storageMap.get(searchKey);
     }
 
 
     @Override
-    protected void removeElement(Object uuid) {
-        storageMap.remove(uuid);
+    protected void removeElement(Object searchKey) {
+        storageMap.remove(searchKey);
     }
 
     @Override
@@ -41,9 +43,19 @@ public class MapStorage extends AbstractStorage {
         return storageMap.size();
     }
 
-    @Override
+/*    @Override
     public Resume[] getAll() {
         return storageMap.values().toArray(new Resume[size()]);
+    }*/
+
+    @Override
+    public List<Resume> getAllSorted() {
+        List<Resume> resumeList = new ArrayList<>();
+        for (Map.Entry<Object,Resume> r : storageMap.entrySet()) {
+            resumeList.add(r.getValue());
+        }
+        resumeList.sort(Resume::compareTo);
+        return resumeList;
     }
 
     @Override
@@ -52,7 +64,8 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
+    protected String getSearchKey(String uuid) {
         return uuid;
     }
+
 }

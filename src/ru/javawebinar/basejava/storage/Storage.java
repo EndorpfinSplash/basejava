@@ -16,7 +16,7 @@ public interface Storage {
 
     void delete(String uuid);
 
-    Resume[] getAll();
+//  Resume[] getAll();
 
     List<Resume> getAllSorted();
 

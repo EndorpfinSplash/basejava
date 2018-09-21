@@ -4,6 +4,7 @@ import ru.javawebinar.basejava.exceptions.ExistStorageException;
 import ru.javawebinar.basejava.exceptions.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
+
 public abstract class AbstractStorage implements Storage {
 
     @Override
@@ -47,6 +48,7 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
+
     protected abstract boolean isExist(Object searchedKey);
 
     protected abstract void saveElement(Resume resume);
@@ -58,4 +60,5 @@ public abstract class AbstractStorage implements Storage {
     protected abstract Object getSearchKey(String uuid);
 
     protected abstract Resume getFromStorage(Object searchKey);
+
 }
