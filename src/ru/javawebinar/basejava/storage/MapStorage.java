@@ -73,10 +73,10 @@ public class MapStorage extends AbstractStorage {
     }
 
 
-    private String checkSearchKeyType(Object searchKey) {
+    private Object checkSearchKeyType(Object searchKey) {
         if (searchKey instanceof Resume) {
             searchKey=((Resume) searchKey).getUuid();
         }
-        return (String) searchKey;
+        return searchKey;
     }
 }
