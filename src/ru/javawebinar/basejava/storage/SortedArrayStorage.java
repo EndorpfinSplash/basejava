@@ -18,11 +18,14 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void removeElement(int index) {
-        System.arraycopy(storage, index + 1, storage, index, size - index - 1);
+        int numMoved = size - index - 1;
+        if (numMoved > 0) {
+            System.arraycopy(storage, index + 1, storage, index, numMoved);
+        }
     }
 
     @Override
     protected Integer getSearchKey(String uuid) {
-        return Arrays.binarySearch(storage, 0, size, new Resume(uuid),RESUME_COMPARATOR);
+        return Arrays.binarySearch(storage, 0, size, new Resume(uuid), RESUME_COMPARATOR);
     }
 }

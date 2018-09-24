@@ -15,7 +15,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     protected boolean isExist(Object searchedKey) {
-        return searchedKey != null && (int) searchedKey > -1;
+        return searchedKey != null;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
+    protected Integer getSearchKey(String uuid) {
 
         for (int i = 0; i < storage.size(); i++) {
             if (uuid.equals(storage.get(i).getUuid())) {

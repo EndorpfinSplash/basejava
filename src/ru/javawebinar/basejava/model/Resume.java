@@ -7,13 +7,8 @@ import java.util.Comparator;
  */
 public class Resume implements Comparable<Resume> {
 
-    // Unique identifier
     private final String uuid;
     private String fullName;
-
-    public String getFullName() {
-        return fullName;
-    }
 
     public Resume(String uuid) {
         this.uuid = uuid;
@@ -22,6 +17,10 @@ public class Resume implements Comparable<Resume> {
     public Resume(String uuid, String fullName) {
         this(uuid);
         this.fullName = fullName;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
     public String getUuid() {

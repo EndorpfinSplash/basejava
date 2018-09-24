@@ -13,13 +13,11 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(Object searchKey) {
-        searchKey = checkSearchKeyType(searchKey);
         return storageMap.containsKey(searchKey);
     }
 
     @Override
     protected void updateElement(Object searchKey, Resume resume) {
-        searchKey = checkSearchKeyType(searchKey);
         storageMap.put((String) searchKey, resume);
     }
 
@@ -31,14 +29,12 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     protected Resume getElement(Object searchKey) {
-        searchKey = checkSearchKeyType(searchKey);
         return storageMap.get(searchKey);
     }
 
 
     @Override
     protected void removeElement(Object searchKey) {
-        searchKey = checkSearchKeyType(searchKey);
         storageMap.remove(searchKey);
     }
 
@@ -49,11 +45,8 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     public List<Resume> getAllFromStorage() {
-        List<Resume> resumeList = new ArrayList<>();
-        for (Map.Entry<String, Resume> r : storageMap.entrySet()) {
-            resumeList.add(r.getValue());
-        }
-        return resumeList;
+
+        return new ArrayList<>(storageMap.values());
     }
 
     @Override
@@ -66,8 +59,4 @@ public class MapUuidStorage extends AbstractStorage {
         return searchKey;
     }
 
-
-    private Object checkSearchKeyType(Object searchKey) {
-        return searchKey instanceof Resume ? ((Resume) searchKey).getUuid() : searchKey;
-    }
 }
