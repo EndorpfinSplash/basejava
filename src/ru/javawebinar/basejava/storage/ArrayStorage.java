@@ -8,7 +8,7 @@ import ru.javawebinar.basejava.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void saveElement(Resume resume, int index) {
+    public void saveElementIntoArray (Resume resume, int index) {
         storage[size] = resume;
     }
 

@@ -4,54 +4,62 @@ import ru.javawebinar.basejava.exceptions.ExistStorageException;
 import ru.javawebinar.basejava.exceptions.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
+import java.util.List;
+
 
 public abstract class AbstractStorage implements Storage {
 
     @Override
-    abstract public void clear();
-
-    @Override
     public void update(Resume resume) {
-        Object searchKey = getSearchKey(resume.getUuid());
-        if (isExist(searchKey)) {
-            updateElement( searchKey, resume);
-        } else {
-            throw new NotExistStorageException(resume.getUuid());
-        }
+        Object searchKey = getExistedSearchKey(resume.getUuid());
+        updateElement(searchKey, resume);
     }
 
     @Override
     public Resume get(String uuid) {
-        Object searchKey = getSearchKey(uuid);
-        if (!isExist(searchKey)) {
-            throw new NotExistStorageException(uuid);
-        }
-        return getFromStorage(searchKey);
+        Object searchKey = getExistedSearchKey(uuid);
+        return getElement(searchKey);
     }
 
     @Override
     public void save(Resume resume) {
-        Object searchKey = getSearchKey(resume.getUuid());
-        if (isExist(searchKey)) {
-            throw new ExistStorageException(resume.getUuid());
-        }
-        saveElement(resume);
+        Object searchKey = getNotExistedSearchKey(resume.getUuid());
+        saveElement(resume, searchKey);
     }
 
     @Override
     public void delete(String uuid) {
+        Object searchKey = getExistedSearchKey(uuid);
+        removeElement(searchKey);
+    }
+
+    public List<Resume> getAllSorted() {
+        List<Resume> resumeList = getAllFromStorage();
+        resumeList.sort(Resume::compareTo);
+        return resumeList;
+    }
+
+    private Object getExistedSearchKey(String uuid) {
         Object searchKey = getSearchKey(uuid);
         if (!isExist(searchKey)) {
             throw new NotExistStorageException(uuid);
-        } else {
-            removeElement(searchKey);
         }
+        return searchKey;
     }
 
+    private Object getNotExistedSearchKey(String uuid) {
+        Object searchKey = getSearchKey(uuid);
+        if (isExist(searchKey)) {
+            throw new ExistStorageException(uuid);
+        }
+        return searchKey;
+    }
+
+    protected abstract List<Resume> getAllFromStorage();
 
     protected abstract boolean isExist(Object searchedKey);
 
-    protected abstract void saveElement(Resume resume);
+    protected abstract void saveElement(Resume resume, Object searchKey);
 
     protected abstract void updateElement(Object searchedKey, Resume resume);
 
@@ -59,6 +67,6 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Object getSearchKey(String uuid);
 
-    protected abstract Resume getFromStorage(Object searchKey);
+    protected abstract Resume getElement(Object searchKey);
 
 }

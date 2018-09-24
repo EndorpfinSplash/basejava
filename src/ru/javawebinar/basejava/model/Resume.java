@@ -16,7 +16,6 @@ public class Resume implements Comparable<Resume> {
         return fullName;
     }
 
-
     public Resume() {
         this(UUID.randomUUID().toString());
     }
@@ -26,18 +25,18 @@ public class Resume implements Comparable<Resume> {
     }
 
     public Resume(String uuid, String fullName) {
-        this.uuid = uuid;
+        this(uuid);
         this.fullName = fullName;
     }
 
 
+    public String getUuid() {
+        return uuid;
+    }
+
     @Override
     public String toString() {
         return /*"Full name: " + fullName +*/ " UUID: " + uuid + "\n";
-    }
-
-    public String getUuid() {
-        return uuid;
     }
 
     @Override

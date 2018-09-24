@@ -9,8 +9,8 @@ import java.util.List;
 
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
-    static final int STORAGE_LIMIT = 10000;
-    int size = 0;
+    public static final int STORAGE_LIMIT = 10000;
+    protected int size = 0;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
 
@@ -31,7 +31,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getFromStorage(Object searchKey) {
+    protected Resume getElement(Object searchKey) {
         return storage[(int) searchKey];
     }
 
@@ -43,16 +43,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-/*
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
-    }
-*/
+
     @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> resumeList = new ArrayList<>(Arrays.asList(Arrays.copyOf(storage, size)));
-        resumeList.sort(Resume::compareTo);
-        return resumeList;
+    public List<Resume> getAllFromStorage() {
+        return new ArrayList<>(Arrays.asList(Arrays.copyOf(storage, size)));
     }
 
     @Override
@@ -63,16 +57,16 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void saveElement(Resume resume) {
+    protected void saveElement(Resume resume, Object searchKey) {
         if (size >= AbstractArrayStorage.STORAGE_LIMIT) {
             throw new StorageException("Storage limit overflow", resume.getUuid());
         }
-        saveElement(resume, (Integer) getSearchKey(resume.getUuid()));
+        saveElementIntoArray(resume, (Integer) searchKey);
         size++;
     }
 
     protected abstract void removeElement(int index);
 
-    protected abstract void saveElement(Resume resume, int index);
+    protected abstract void saveElementIntoArray(Resume resume, int index);
 
 }

@@ -29,12 +29,12 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void saveElement(Resume resume) {
+    protected void saveElement(Resume resume, Object searchKey) {
         storage.add(resume);
     }
 
     @Override
-    protected Resume getFromStorage(Object searchKey) {
+    protected Resume getElement(Object searchKey) {
         return storage.get((int) searchKey);
     }
 
@@ -43,14 +43,8 @@ public class ListStorage extends AbstractStorage {
         storage.remove((int) searchKey);
     }
 
-/*    @Override
-    public Resume[] getAll() {
-        return storage.toArray(new Resume[size()]);
-    }*/
-
     @Override
-    public List<Resume> getAllSorted() {
-        storage.sort(Resume::compareTo);
+    public List<Resume> getAllFromStorage() {
         return storage;
     }
 

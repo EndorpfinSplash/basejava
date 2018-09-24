@@ -10,7 +10,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     private static final Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getUuid);
 
     @Override
-    public void saveElement(Resume resume, int index) {
+    public void saveElementIntoArray(Resume resume, int index) {
         int indexForSave = index * (-1) - 1;
         System.arraycopy(storage, indexForSave, storage, indexForSave + 1, size - indexForSave);
         storage[indexForSave] = resume;
