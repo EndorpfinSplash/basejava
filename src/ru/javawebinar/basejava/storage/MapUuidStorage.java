@@ -54,7 +54,6 @@ public class MapUuidStorage extends AbstractStorage {
         storageMap.clear();
     }
 
-
     protected Object getSearchKey(String searchKey) {
         return searchKey;
     }

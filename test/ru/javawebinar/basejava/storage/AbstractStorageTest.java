@@ -68,8 +68,6 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() {
-        System.out.println(storage.getAllSorted());
-        System.out.println(RESUME_1);
         Assert.assertEquals(RESUME_1, storage.get(UUID_1));
     }
 
@@ -94,8 +92,6 @@ public abstract class AbstractStorageTest {
         final String testResumeUuid = "uuid4";
         Resume testResume = new Resume(testResumeUuid);
         storage.save(testResume);
-        System.out.println(storage.size());
-        System.out.println(storage.getAllSorted());
         Assert.assertEquals(testResume, storage.get(testResume.getUuid()));
         Assert.assertEquals(4, storage.size());
     }
