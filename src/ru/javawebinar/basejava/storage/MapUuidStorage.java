@@ -26,12 +26,10 @@ public class MapUuidStorage extends AbstractStorage {
         storageMap.put((String) searchKey, resume);
     }
 
-
     @Override
     protected Resume getElement(Object searchKey) {
         return storageMap.get(searchKey);
     }
-
 
     @Override
     protected void removeElement(Object searchKey) {
@@ -45,7 +43,6 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     public List<Resume> getAllFromStorage() {
-
         return new ArrayList<>(storageMap.values());
     }
 
@@ -54,7 +51,7 @@ public class MapUuidStorage extends AbstractStorage {
         storageMap.clear();
     }
 
-    protected Object getSearchKey(String searchKey) {
+    protected String getSearchKey(String searchKey) {
         return searchKey;
     }
 
