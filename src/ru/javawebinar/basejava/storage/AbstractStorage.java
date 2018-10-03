@@ -45,17 +45,20 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     @Override
     public void save(Resume resume) {
+        LOG.info("save " + resume);
         SK searchKey = getNotExistedSearchKey(resume.getUuid());
         saveElement(resume, searchKey);
     }
 
     @Override
     public void delete(String uuid) {
+        LOG.info("delete " + uuid);
         SK searchKey = getExistedSearchKey(uuid);
         removeElement(searchKey);
     }
 
     public List<Resume> getAllSorted() {
+        LOG.info("getAllSorted" );
         List<Resume> resumeList = getAllFromStorage();
         resumeList.sort(RESUME_COMPARATOR);
         return resumeList;
