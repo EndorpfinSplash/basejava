@@ -58,9 +58,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAllSorted() {
-        final List<Resume> TEST_RESUMES_LIST = new ArrayList<>(Arrays.asList(RESUME_2, RESUME_1, RESUME_3));
+        final List<Resume> test_resume_list = new ArrayList<>(Arrays.asList(RESUME_2, RESUME_1, RESUME_3));
         List<Resume> resumeList = storage.getAllSorted();
-        Assert.assertThat(resumeList, is(TEST_RESUMES_LIST));
+        Assert.assertThat(resumeList, is(test_resume_list));
     }
 
     @Test
@@ -91,8 +91,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void save() {
-        final String testResumeUuid = "uuid4";
-        Resume testResume = new Resume(testResumeUuid);
+        Resume testResume = new Resume("TestResume");
         storage.save(testResume);
         Assert.assertEquals(testResume, storage.get(testResume.getUuid()));
         Assert.assertEquals(4, storage.size());
