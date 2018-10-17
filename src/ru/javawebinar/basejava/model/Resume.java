@@ -1,5 +1,6 @@
 package ru.javawebinar.basejava.model;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -11,6 +12,8 @@ public class Resume {
     // Unique identifier
     private String uuid;
     private String fullName;
+    private Map<SectionType,Section> Sections;
+    private Map<ContactType,String > Contacts;
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
