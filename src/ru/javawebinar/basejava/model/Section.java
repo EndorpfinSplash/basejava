@@ -1,4 +1,7 @@
 package ru.javawebinar.basejava.model;
 
-public class Section {
+abstract class Section {
+    @Override
+    abstract public String toString();
 }
+
