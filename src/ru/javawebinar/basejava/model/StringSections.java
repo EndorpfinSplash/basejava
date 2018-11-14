@@ -2,8 +2,12 @@ package ru.javawebinar.basejava.model;
 
 import java.util.List;
 
-public class SectionWithList extends Section{
-    List<String> sectionList;
+public class StringSections extends AbstractSection {
+    private List<String> sectionList;
+
+    public StringSections(List<String> sectionList) {
+        this.sectionList = sectionList;
+    }
 
     public List<String> getList() {
         return sectionList;
@@ -15,9 +19,9 @@ public class SectionWithList extends Section{
 
     @Override
     public String toString() {
-        String text="";
-        for (String s:sectionList) {
-         text = text + s;
+        String text = "";
+        for (String s : sectionList) {
+            text = text + s;
         }
         return text;
     }

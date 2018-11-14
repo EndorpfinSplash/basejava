@@ -1,7 +1,11 @@
 package ru.javawebinar.basejava.model;
 
-public class SectionWithText extends Section{
+public class SectionWithText extends AbstractSection {
     private String text;
+
+    public SectionWithText(String text) {
+        this.text = text;
+    }
 
     public String getText() {
         return text;
