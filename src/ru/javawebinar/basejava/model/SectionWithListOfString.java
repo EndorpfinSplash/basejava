@@ -2,10 +2,10 @@ package ru.javawebinar.basejava.model;
 
 import java.util.List;
 
-public class StringSections extends AbstractSection {
+public class SectionWithListOfString extends AbstractSection {
     private List<String> sectionList;
 
-    public StringSections(List<String> sectionList) {
+    public SectionWithListOfString(List<String> sectionList) {
         this.sectionList = sectionList;
     }
 
@@ -21,7 +21,7 @@ public class StringSections extends AbstractSection {
     public String toString() {
         String text = "";
         for (String s : sectionList) {
-            text = text + s;
+            text = text + s + "\n";
         }
         return text;
     }

@@ -12,8 +12,8 @@ public class Resume {
     // Unique identifier
     private String uuid;
     private String fullName;
-    private Map<SectionType, AbstractSection> Sections;
     private Map<ContactType, String> Contacts;
+    private Map<SectionType, AbstractSection> Sections;
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -22,6 +22,13 @@ public class Resume {
     public Resume(String uuid, String fullName) {
         this.uuid = uuid;
         this.fullName = fullName;
+    }
+
+    public Resume(String uuid, String fullName, Map<ContactType, String> contacts, Map<SectionType, AbstractSection> sections) {
+        this.uuid = uuid;
+        this.fullName = fullName;
+        Contacts = contacts;
+        Sections = sections;
     }
 
     public String getFullName() {
@@ -61,6 +68,30 @@ public class Resume {
         return "Resume{" +
                 "uuid='" + uuid + '\'' +
                 ", fullName='" + fullName + '\'' +
+                '}';
+    }
+
+    public String convertString() {
+        String cont = "";
+        String sect = "";
+        for (Map.Entry<ContactType, String> entry : Contacts.entrySet()) {
+            cont = cont + entry.getKey().getType() + ": " + entry.getValue() + "\n";
+        }
+
+        for (Map.Entry<SectionType, AbstractSection> entry : Sections.entrySet()) {
+            sect = sect + entry.getKey().getTitle() + "\n" + entry.getValue() +
+                    "\n --------------------------------------------------------------------------------------------------\n";
+        }
+
+        return "Resume{" +
+                "\n" +
+                "uuid='" + uuid + '\'' +
+                "\n" +
+                fullName +
+                "\n" +
+                cont +
+                "\n" +
+                sect +
                 '}';
     }
 
