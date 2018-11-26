@@ -1,14 +1,14 @@
 package ru.javawebinar.basejava.model;
 
 public class Experience extends AbstractSection {
-    String company;
+    Link company;
     String startDate;
     String endDate;
     String title;
     String description;
 
-    public Experience(String company, String startDate, String endDate, String title, String description) {
-        this.company = company;
+    public Experience(String companyName, String url, String startDate, String endDate, String title, String description) {
+        this.company = new Link(companyName, url);
         this.startDate = startDate;
         this.endDate = endDate;
         this.title = title;

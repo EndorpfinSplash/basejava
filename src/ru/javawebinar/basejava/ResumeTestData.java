@@ -2,16 +2,13 @@ package ru.javawebinar.basejava;
 
 import ru.javawebinar.basejava.model.*;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class ResumeTestData {
     public static void main(String[] args) {
-        Map<ContactType, String> contacts = new HashMap<>();
-        Map<SectionType, AbstractSection> sections = new HashMap<>();
-        Resume resume = new Resume("111", "Григорий Кислин",contacts, sections);
+
+        Resume resume = new Resume("111", "Григорий Кислин");
 
         resume.getContacts().put(ContactType.phone, "+7(921) 855-0482");
         resume.getContacts().put(ContactType.skype, "grigory.kislin");
@@ -59,7 +56,7 @@ public class ResumeTestData {
         List<Experience> experienceList = new LinkedList<>();
 
         experienceList.add(
-                new Experience("Java Online Projects",
+                new Experience("Java Online Projects",null,
                         "10/2013",
                         "Сейчас",
                         "Автор проекта.",
@@ -68,7 +65,7 @@ public class ResumeTestData {
         );
 
         experienceList.add(
-                new Experience("Wrike",
+                new Experience("Wrike",null,
                         "10/2014",
                         "01/2016",
                         "Старший разработчик (backend)",
@@ -77,7 +74,7 @@ public class ResumeTestData {
         );
 
         experienceList.add(
-                new Experience("RIT Center",
+                new Experience("RIT Center",null,
                         "04/2012",
                         "10/2014",
                         "Java архитектор",
@@ -86,7 +83,7 @@ public class ResumeTestData {
         );
 
         experienceList.add(
-                new Experience("Luxoft (Deutsche Bank)",
+                new Experience("Luxoft (Deutsche Bank)",null,
                         "12/2010",
                         "04/2012",
                         "Ведущий программист",
@@ -95,7 +92,7 @@ public class ResumeTestData {
         );
 
         experienceList.add(
-                new Experience("Yota",
+                new Experience("Yota",null,
                         "06/2008",
                         "12/2010",
                         "Ведущий специалист",
@@ -104,7 +101,7 @@ public class ResumeTestData {
         );
 
         experienceList.add(
-                new Experience("Enkata",
+                new Experience("Enkata",null,
                         "03/2007",
                         "06/2008",
                         "Разработчик ПО",
@@ -113,7 +110,7 @@ public class ResumeTestData {
         );
 
         experienceList.add(
-                new Experience("Siemens AG",
+                new Experience("Siemens AG",null,
                         "01/2005",
                         "02/2007",
                         "Разработчик ПО",
@@ -122,7 +119,7 @@ public class ResumeTestData {
         );
 
         experienceList.add(
-                new Experience("Alcatel",
+                new Experience("Alcatel",null,
                         "09/1997",
                         "01/2005",
                         "Инженер по аппаратному и программному тестированию",
@@ -135,7 +132,7 @@ public class ResumeTestData {
         List<Experience> educationList = new LinkedList<>();
 
         educationList.add(
-                new Experience("Coursera",
+                new Experience("Coursera",null,
                         "03/2013",
                         "05/2013",
                         "\"Functional Programming Principles in Scala\" by Martin Odersky",
@@ -144,7 +141,7 @@ public class ResumeTestData {
         );
 
         educationList.add(
-                new Experience("Luxoft",
+                new Experience("Luxoft",null,
                         "03/2011",
                         "04/2011",
                         "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"",
@@ -153,7 +150,7 @@ public class ResumeTestData {
         );
 
         educationList.add(
-                new Experience("Siemens AG",
+                new Experience("Siemens AG",null,
                         "01/2005",
                         "04/2005",
                         "3 месяца обучения мобильным IN сетям (Берлин)",
@@ -162,7 +159,7 @@ public class ResumeTestData {
         );
 
         educationList.add(
-                new Experience("Alcatel",
+                new Experience("Alcatel",null,
                         "09/1997",
                         "03/1998",
                         "6 месяцев обучения цифровым телефонным сетям (Москва)",
@@ -171,7 +168,7 @@ public class ResumeTestData {
         );
 
         educationList.add(
-                new Experience("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",
+                new Experience("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",null,
                         "09/1993",
                         "07/1996",
                         "Аспирантура (программист С, С++)",
@@ -180,7 +177,7 @@ public class ResumeTestData {
         );
 
         educationList.add(
-                new Experience("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",
+                new Experience("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",null,
                         "09/1987",
                         "07/1993",
                         "Инженер (программист Fortran, C)",
@@ -189,7 +186,7 @@ public class ResumeTestData {
         );
 
         educationList.add(
-                new Experience("Заочная физико-техническая школа при МФТИ",
+                new Experience("Заочная физико-техническая школа при МФТИ",null,
                         "09/1984",
                         "06/1987",
                         "Закончил с отличием",
