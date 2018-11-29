@@ -5,13 +5,8 @@ import java.util.Map;
 import java.util.Objects;
 
 public class ExperienceSections extends AbstractSection {
-    //private final List<Experience> experienceList;
-    private final Map<Link,List<Experience>> experienceList;
 
-/*    public ExperienceSections(List<Experience> experienceList) {
-        Objects.requireNonNull(experienceList, "organizations must not be null");
-        this.experienceList = experienceList;
-    }*/
+    private final Map<Link,List<Experience>> experienceList;
 
     public ExperienceSections(Map<Link,List<Experience>> experienceList) {
         Objects.requireNonNull(experienceList, "organizations must not be null");
@@ -26,18 +21,18 @@ public class ExperienceSections extends AbstractSection {
     @Override
     public String toString() {
 
-        String list = "";
-        String experiences = "";
+        String sectionForOutput = "";
         for (Map.Entry<Link,List<Experience>> pair : experienceList.entrySet()) {
+            String experiences = "";
             for (Experience ex : pair.getValue()) {
-                experiences = experiences + ex + '\n';
+                experiences = experiences + ex ;
             }
 
-            list = list + pair.getKey().getName() + "\n" +
+            sectionForOutput = sectionForOutput + pair.getKey().getName() + "\n" +
                         "" + experiences +
-                        "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+                        "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
         }
-        return list;
+        return sectionForOutput;
     }
 
     @Override
