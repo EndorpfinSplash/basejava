@@ -1,9 +1,10 @@
 package ru.javawebinar.basejava;
 
 import ru.javawebinar.basejava.model.*;
+import ru.javawebinar.basejava.util.DateUtil;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.time.Month;
+import java.util.*;
 
 public class ResumeTestData {
     public static void main(String[] args) {
@@ -54,11 +55,12 @@ public class ResumeTestData {
         resume.getSections().put(SectionType.QUALIFICATIONS, new SectionWithListOfString(qualificationList));
 
         List<Experience> experienceList = new LinkedList<>();
+        Map<Link, List<Experience>> educationMap = new HashMap<>();
 
         experienceList.add(
                 new Experience("Java Online Projects",null,
-                        "10/2013",
-                        "Сейчас",
+                        DateUtil.of(2013,Month.OCTOBER),
+                        DateUtil.of(),
                         "Автор проекта.",
                         "Создание, организация и проведение Java онлайн проектов и стажировок."
                 )
@@ -66,8 +68,8 @@ public class ResumeTestData {
 
         experienceList.add(
                 new Experience("Wrike",null,
-                        "10/2014",
-                        "01/2016",
+                        DateUtil.of(2014,Month.OCTOBER),
+                        DateUtil.of(2016,Month.JANUARY),
                         "Старший разработчик (backend)",
                         "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."
                 )
@@ -75,8 +77,8 @@ public class ResumeTestData {
 
         experienceList.add(
                 new Experience("RIT Center",null,
-                        "04/2012",
-                        "10/2014",
+                        DateUtil.of(2012,Month.APRIL),
+                        DateUtil.of(2014,Month.OCTOBER),
                         "Java архитектор",
                         "Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения (почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python"
                 )
@@ -84,8 +86,8 @@ public class ResumeTestData {
 
         experienceList.add(
                 new Experience("Luxoft (Deutsche Bank)",null,
-                        "12/2010",
-                        "04/2012",
+                        DateUtil.of(2010,Month.DECEMBER),
+                        DateUtil.of(2012,Month.APRIL),
                         "Ведущий программист",
                         "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования, мониторинга и анализа результатов в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5."
                 )
@@ -93,8 +95,8 @@ public class ResumeTestData {
 
         experienceList.add(
                 new Experience("Yota",null,
-                        "06/2008",
-                        "12/2010",
+                        DateUtil.of(2008,Month.JUNE),
+                        DateUtil.of(2010,Month.DECEMBER),
                         "Ведущий специалист",
                         "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" (GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). Реализация администрирования, статистики и мониторинга фреймворка. Разработка online JMX клиента (Python/ Jython, Django, ExtJS)"
                 )
@@ -102,8 +104,10 @@ public class ResumeTestData {
 
         experienceList.add(
                 new Experience("Enkata",null,
-                        "03/2007",
-                        "06/2008",
+                        DateUtil.of(2007,Month.MARCH),
+                        DateUtil.of(2008,Month.JUNE),
+//                        "03/2007",
+//                        "06/2008",
                         "Разработчик ПО",
                         "Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS) частей кластерного J2EE приложения (OLAP, Data mining)."
                 )
@@ -111,8 +115,8 @@ public class ResumeTestData {
 
         experienceList.add(
                 new Experience("Siemens AG",null,
-                        "01/2005",
-                        "02/2007",
+                        DateUtil.of(2005,Month.JANUARY),
+                        DateUtil.of(2007,Month.FEBRUARY),
                         "Разработчик ПО",
                         "Разработка информационной модели, проектирование интерфейсов, реализация и отладка ПО на мобильной IN платформе Siemens @vantage (Java, Unix)./ Jython, Django, ExtJS)"
                 )
@@ -120,21 +124,34 @@ public class ResumeTestData {
 
         experienceList.add(
                 new Experience("Alcatel",null,
-                        "09/1997",
-                        "01/2005",
+                        DateUtil.of(1997,Month.SEPTEMBER),
+                        DateUtil.of(2005,Month.JANUARY),
                         "Инженер по аппаратному и программному тестированию",
                         "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM)."
                 )
         );
 
-        resume.getSections().put(SectionType.EXPERIENCE, new ExperienceSections(experienceList));
+        Map<Link, List<Experience>> experienceMap = new HashMap<>();
+
+        for (Experience experience : experienceList) {
+
+            List<Experience> addedExp = educationMap.getOrDefault(experience.getCompany(),new ArrayList<>());
+            addedExp.add(experience);
+
+            experienceMap.put(
+                    experience.getCompany(),
+                    addedExp
+            );
+        }
+
+        resume.getSections().put(SectionType.EXPERIENCE, new ExperienceSections(experienceMap));
 
         List<Experience> educationList = new LinkedList<>();
 
         educationList.add(
                 new Experience("Coursera",null,
-                        "03/2013",
-                        "05/2013",
+                        DateUtil.of(2013,Month.MARCH),
+                        DateUtil.of(2013,Month.MAY),
                         "\"Functional Programming Principles in Scala\" by Martin Odersky",
                         ""
                 )
@@ -142,8 +159,8 @@ public class ResumeTestData {
 
         educationList.add(
                 new Experience("Luxoft",null,
-                        "03/2011",
-                        "04/2011",
+                        DateUtil.of(2011,Month.MARCH),
+                        DateUtil.of(2011,Month.APRIL),
                         "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"",
                         ""
                 )
@@ -151,8 +168,8 @@ public class ResumeTestData {
 
         educationList.add(
                 new Experience("Siemens AG",null,
-                        "01/2005",
-                        "04/2005",
+                        DateUtil.of(2005,Month.JANUARY),
+                        DateUtil.of(2005,Month.APRIL),
                         "3 месяца обучения мобильным IN сетям (Берлин)",
                         ""
                 )
@@ -160,8 +177,8 @@ public class ResumeTestData {
 
         educationList.add(
                 new Experience("Alcatel",null,
-                        "09/1997",
-                        "03/1998",
+                        DateUtil.of(1997,Month.SEPTEMBER),
+                        DateUtil.of(1998,Month.MARCH),
                         "6 месяцев обучения цифровым телефонным сетям (Москва)",
                         ""
                 )
@@ -169,8 +186,8 @@ public class ResumeTestData {
 
         educationList.add(
                 new Experience("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",null,
-                        "09/1993",
-                        "07/1996",
+                        DateUtil.of(1993,Month.SEPTEMBER),
+                        DateUtil.of(1996,Month.JUNE),
                         "Аспирантура (программист С, С++)",
                         ""
                 )
@@ -178,8 +195,8 @@ public class ResumeTestData {
 
         educationList.add(
                 new Experience("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",null,
-                        "09/1987",
-                        "07/1993",
+                        DateUtil.of(1987,Month.SEPTEMBER),
+                        DateUtil.of(1993,Month.JUNE),
                         "Инженер (программист Fortran, C)",
                         ""
                 )
@@ -187,14 +204,25 @@ public class ResumeTestData {
 
         educationList.add(
                 new Experience("Заочная физико-техническая школа при МФТИ",null,
-                        "09/1984",
-                        "06/1987",
+                        DateUtil.of(1984,Month.SEPTEMBER),
+                        DateUtil.of(1987,Month.JUNE),
                         "Закончил с отличием",
                         ""
                 )
         );
 
-        resume.getSections().put(SectionType.EDUCATION, new ExperienceSections(educationList));
+        for (Experience experience : educationList) {
+
+            List<Experience> addedExp = educationMap.getOrDefault(experience.getCompany(),new ArrayList<>());
+            addedExp.add(experience);
+
+            educationMap.put(
+                    experience.getCompany(),
+                    addedExp
+            );
+        }
+        resume.getSections().put(SectionType.EDUCATION, new ExperienceSections(educationMap));
+
 
         System.out.println(resume.convertString());
 
