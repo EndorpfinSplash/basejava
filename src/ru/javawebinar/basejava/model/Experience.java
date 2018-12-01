@@ -26,13 +26,10 @@ public class Experience extends AbstractSection {
 
     @Override
     public String toString() {
-        return  "\n" +
-                company +
-                "\n" +
-                dateTimeFormatter.format(startDate )+ " - "  +  dateTimeFormatter.format(endDate ) +
+        return dateTimeFormatter.format(startDate) + " - " + dateTimeFormatter.format(endDate) +
                 "        " +
                 title +
                 "\n" +
-                description ;
+                description;
     }
 }
