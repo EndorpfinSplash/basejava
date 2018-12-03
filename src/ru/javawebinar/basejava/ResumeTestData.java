@@ -9,6 +9,11 @@ import java.util.*;
 public class ResumeTestData {
     public static void main(String[] args) {
 
+
+        System.out.println(createResume().convertString());
+    }
+
+    public static Resume createResume() {
         Resume resume = new Resume("111", "Григорий Кислин");
 
         resume.getContacts().put(ContactType.phone, "+7(921) 855-0482");
@@ -221,7 +226,6 @@ public class ResumeTestData {
             );
         }
         resume.getSections().put(SectionType.EDUCATION, new ExperienceSections(educationMap));
-
-        System.out.println(resume.convertString());
+        return resume;
     }
 }
