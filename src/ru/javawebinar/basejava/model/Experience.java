@@ -4,11 +4,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Experience extends AbstractSection {
-    Link company;
+    private Link company;
     private final LocalDate startDate;
     private final LocalDate endDate;
-    String title;
-    String description;
+    private String title;
+    private String description;
 
     final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/YYYY");
 

@@ -66,21 +66,14 @@ public class Resume {
 
     @Override
     public String toString() {
-        return "Resume{" +
-                "uuid='" + uuid + '\'' +
-                ", fullName='" + fullName + '\'' +
-                '}';
-    }
-
-    public String convertString() {
-        String cont = "";
-        String sect = "";
+        String contacts = "";
+        String sections = "";
         for (Map.Entry<ContactType, String> entry : Contacts.entrySet()) {
-            cont = cont + entry.getKey().getType() + ": " + entry.getValue() + "\n";
+            contacts = contacts + entry.getKey().getType() + ": " + entry.getValue() + "\n";
         }
 
         for (Map.Entry<SectionType, AbstractSection> entry : Sections.entrySet()) {
-            sect = sect + entry.getKey().getTitle() + "\n" + entry.getValue() +
+            sections = sections + entry.getKey().getTitle() + "\n" + entry.getValue() +
                     "\n --------------------------------------------------------------------------------------------------\n";
         }
 
@@ -90,9 +83,9 @@ public class Resume {
                 "\n" +
                 fullName +
                 "\n" +
-                cont +
+                contacts +
                 "\n" +
-                sect +
+                sections +
                 '}';
     }
 
@@ -102,12 +95,13 @@ public class Resume {
         if (o == null || getClass() != o.getClass()) return false;
         Resume resume = (Resume) o;
         return Objects.equals(uuid, resume.uuid) &&
-                Objects.equals(fullName, resume.fullName);
+                Objects.equals(fullName, resume.fullName) &&
+                Objects.equals(Contacts, resume.Contacts) &&
+                Objects.equals(Sections, resume.Sections);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(uuid, fullName);
+        return Objects.hash(uuid, fullName, Contacts, Sections);
     }
 }

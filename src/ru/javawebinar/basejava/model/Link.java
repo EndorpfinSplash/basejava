@@ -3,8 +3,8 @@ package ru.javawebinar.basejava.model;
 import java.util.Objects;
 
 public class Link {
-    String name;
-    String url;
+    private String name;
+    private String url;
 
     public Link(String name, String url) {
         Objects.requireNonNull(name, " name must not be null");

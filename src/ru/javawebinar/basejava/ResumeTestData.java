@@ -10,19 +10,19 @@ public class ResumeTestData {
     public static void main(String[] args) {
 
 
-        System.out.println(createResume().convertString());
+        System.out.println(createResume());
     }
 
     public static Resume createResume() {
         Resume resume = new Resume("111", "Григорий Кислин");
 
-        resume.getContacts().put(ContactType.phone, "+7(921) 855-0482");
-        resume.getContacts().put(ContactType.skype, "grigory.kislin");
-        resume.getContacts().put(ContactType.email, "gkislin@yandex.ru");
-        resume.getContacts().put(ContactType.linkedin, "https://www.linkedin.com/in/gkislin");
-        resume.getContacts().put(ContactType.github, "https://github.com/gkislin");
-        resume.getContacts().put(ContactType.stackowerflow, "https://stackoverflow.com/users/548473");
-        resume.getContacts().put(ContactType.hompage, "http://gkislin.ru/");
+        resume.getContacts().put(ContactType.PHONE, "+7(921) 855-0482");
+        resume.getContacts().put(ContactType.SKYPE, "grigory.kislin");
+        resume.getContacts().put(ContactType.EMAIL, "gkislin@yandex.ru");
+        resume.getContacts().put(ContactType.LINKEDIN, "https://www.LINKEDIN.com/in/gkislin");
+        resume.getContacts().put(ContactType.GITHUB, "https://GITHUB.com/gkislin");
+        resume.getContacts().put(ContactType.STACKOWERFLOW, "https://stackoverflow.com/users/548473");
+        resume.getContacts().put(ContactType.HOMPAGE, "http://gkislin.ru/");
 
         resume.getSections().put(SectionType.OBJECTIVE, new SectionWithText("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
         resume.getSections().put(SectionType.PERSONAL, new SectionWithText("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
