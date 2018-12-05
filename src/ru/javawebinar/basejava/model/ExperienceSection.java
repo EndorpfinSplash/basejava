@@ -20,7 +20,7 @@ public class ExperienceSection extends AbstractSection {
     public String toString() {
         String experiancesInCompanies = "";
         for (ExperienceInCompany experienceInCompany : experienceInCompanies) {
-            experiancesInCompanies = experiancesInCompanies + experienceInCompany.toString();
+            experiancesInCompanies = experiancesInCompanies + experienceInCompany.toString() + '\n'+'\n';
         }
 
         return experiancesInCompanies;

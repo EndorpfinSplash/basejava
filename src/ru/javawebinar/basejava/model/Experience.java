@@ -24,7 +24,6 @@ public class Experience extends AbstractSection {
                 "        " +
                 title +
                 "\n" +
-                description +
-                "\n";
+                description;
     }
 }

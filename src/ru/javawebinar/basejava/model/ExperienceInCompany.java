@@ -27,11 +27,11 @@ public class ExperienceInCompany {
 
         String listOfExperianceInCompany = "";
         for (Experience experience : experienceList) {
-            listOfExperianceInCompany = listOfExperianceInCompany + experience.toString();
+            listOfExperianceInCompany = listOfExperianceInCompany + experience.toString() + '\n';
         }
 
         return company +
-                "\n======================\n" +
+                "\n=======================================================\n" +
                 experienceList;
     }
 }
