@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Experience extends AbstractSection {
-    private Link company;
     private final LocalDate startDate;
     private final LocalDate endDate;
     private String title;
@@ -12,16 +11,11 @@ public class Experience extends AbstractSection {
 
     final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/YYYY");
 
-    public Experience(String companyName, String url, LocalDate startDate, LocalDate endDate, String title, String description) {
-        this.company = new Link(companyName, url);
+    public Experience(LocalDate startDate, LocalDate endDate, String title, String description) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.title = title;
         this.description = description;
-    }
-
-    public Link getCompany() {
-        return company;
     }
 
     @Override
@@ -30,6 +24,7 @@ public class Experience extends AbstractSection {
                 "        " +
                 title +
                 "\n" +
-                description;
+                description +
+                "\n";
     }
 }

@@ -59,9 +59,31 @@ public class ResumeTestData {
 
         resume.getSections().put(SectionType.QUALIFICATIONS, new SectionWithListOfString(qualificationList));
 
+        List<ExperienceInCompany> experienceInCompanies = new ArrayList<>();
+
+        experienceInCompanies.add(
+                new ExperienceInCompany(
+                        new Link("Java Online Projects", null),
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        new Experience(
+                                                DateUtil.of(2013, Month.OCTOBER),
+                                                DateUtil.of(),
+                                                "Автор проекта.",
+                                                "Создание, организация и проведение Java онлайн проектов и стажировок."
+                                        )
+                                )
+                        )
+                )
+        );
+
+        ExperienceSection experienceSection = new ExperienceSection(experienceInCompanies);
+
         List<Experience> experienceList = new LinkedList<>();
 
         experienceList.add(
+
+
                 new Experience("Java Online Projects", null,
                         DateUtil.of(2013, Month.OCTOBER),
                         DateUtil.of(),
@@ -146,7 +168,7 @@ public class ResumeTestData {
             );
         }
 
-        resume.getSections().put(SectionType.EXPERIENCE, new ExperienceSections(experienceMap));
+        resume.getSections().put(SectionType.EXPERIENCE, new ExperienceSection(experienceMap));
 
         List<Experience> educationList = new LinkedList<>();
 
@@ -225,7 +247,7 @@ public class ResumeTestData {
                     eduList
             );
         }
-        resume.getSections().put(SectionType.EDUCATION, new ExperienceSections(educationMap));
+        resume.getSections().put(SectionType.EDUCATION, new ExperienceSection(educationMap));
         return resume;
     }
 }
