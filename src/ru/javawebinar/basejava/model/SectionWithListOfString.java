@@ -1,5 +1,6 @@
 package ru.javawebinar.basejava.model;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,6 +10,10 @@ public class SectionWithListOfString extends AbstractSection {
     public SectionWithListOfString(List<String> sectionList) {
         Objects.requireNonNull(sectionList, "list must not be null");
         this.sectionList = sectionList;
+    }
+
+    public SectionWithListOfString(String ... sectionList) {
+        this(Arrays.asList(sectionList));
     }
 
     public List<String> getSectionList() {
