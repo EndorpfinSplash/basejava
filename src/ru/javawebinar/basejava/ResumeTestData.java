@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import static ru.javawebinar.basejava.util.DateUtil.NOW;
+
 public class ResumeTestData {
     public static void main(String[] args) {
 
@@ -69,9 +71,9 @@ public class ResumeTestData {
                         new Link("Java Online Projects", null),
                         new ArrayList<>(
                                 Arrays.asList(
-                                        new Experience(
+                                        new ExperienceInCompany.Position(
                                                 DateUtil.of(2013, Month.OCTOBER),
-                                                DateUtil.of(),
+                                                NOW,
                                                 "Автор проекта.",
                                                 "Создание, организация и проведение Java онлайн проектов и стажировок."
                                         )
@@ -85,7 +87,7 @@ public class ResumeTestData {
                         new Link("Wrike", null),
                         new ArrayList<>(
                                 Arrays.asList(
-                                        new Experience(
+                                        new ExperienceInCompany.Position(
                                                 DateUtil.of(2013, Month.OCTOBER),
                                                 DateUtil.of(),
                                                 "Автор проекта.",
@@ -101,7 +103,7 @@ public class ResumeTestData {
                         new Link("RIT Center", null),
                         new ArrayList<>(
                                 Arrays.asList(
-                                        new Experience(
+                                        new ExperienceInCompany.Position(
                                                 DateUtil.of(2012, Month.APRIL),
                                                 DateUtil.of(2014, Month.OCTOBER),
                                                 "Java архитектор",
@@ -117,7 +119,7 @@ public class ResumeTestData {
                         new Link("Luxoft (Deutsche Bank)", null),
                         new ArrayList<>(
                                 Arrays.asList(
-                                        new Experience(
+                                        new ExperienceInCompany.Position(
                                                 DateUtil.of(2010, Month.DECEMBER),
                                                 DateUtil.of(2012, Month.APRIL),
                                                 "Ведущий программист",
@@ -133,7 +135,7 @@ public class ResumeTestData {
                         new Link("Yota", null),
                         new ArrayList<>(
                                 Arrays.asList(
-                                        new Experience(
+                                        new ExperienceInCompany.Position(
                                                 DateUtil.of(2008, Month.JUNE),
                                                 DateUtil.of(2010, Month.DECEMBER),
                                                 "Ведущий специалист",
@@ -149,7 +151,7 @@ public class ResumeTestData {
                         new Link("Enkata", null),
                         new ArrayList<>(
                                 Arrays.asList(
-                                        new Experience(
+                                        new ExperienceInCompany.Position(
                                                 DateUtil.of(2007, Month.MARCH),
                                                 DateUtil.of(2008, Month.JUNE),
                                                 "Разработчик ПО",
@@ -165,7 +167,7 @@ public class ResumeTestData {
                         new Link("Siemens AG", null),
                         new ArrayList<>(
                                 Arrays.asList(
-                                        new Experience(
+                                        new ExperienceInCompany.Position(
                                                 DateUtil.of(2005, Month.JANUARY),
                                                 DateUtil.of(2007, Month.FEBRUARY),
                                                 "Разработчик ПО",
@@ -181,7 +183,7 @@ public class ResumeTestData {
                         new Link("Alcatel", null),
                         new ArrayList<>(
                                 Arrays.asList(
-                                        new Experience(
+                                        new ExperienceInCompany.Position(
                                                 DateUtil.of(1997, Month.SEPTEMBER),
                                                 DateUtil.of(2005, Month.JANUARY),
                                                 "Инженер по аппаратному и программному тестированию",
@@ -204,7 +206,7 @@ public class ResumeTestData {
                         new Link("Coursera", null),
                         new ArrayList<>(
                                 Arrays.asList(
-                                        new Experience(
+                                        new ExperienceInCompany.Position(
                                                 DateUtil.of(2013, Month.MARCH),
                                                 DateUtil.of(2013, Month.MAY),
                                                 "\"Functional Programming Principles in Scala\" by Martin Odersky",
@@ -220,7 +222,7 @@ public class ResumeTestData {
                         new Link("Luxoft", null),
                         new ArrayList<>(
                                 Arrays.asList(
-                                        new Experience(
+                                        new ExperienceInCompany.Position(
                                                 DateUtil.of(2011, Month.MARCH),
                                                 DateUtil.of(2011, Month.APRIL),
                                                 "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"",
@@ -236,7 +238,7 @@ public class ResumeTestData {
                         new Link("Siemens AG", null),
                         new ArrayList<>(
                                 Arrays.asList(
-                                        new Experience(
+                                        new ExperienceInCompany.Position(
                                                 DateUtil.of(2005, Month.JANUARY),
                                                 DateUtil.of(2005, Month.APRIL),
                                                 "3 месяца обучения мобильным IN сетям (Берлин)",
@@ -252,7 +254,7 @@ public class ResumeTestData {
                         new Link("Alcatel", null),
                         new ArrayList<>(
                                 Arrays.asList(
-                                        new Experience(
+                                        new ExperienceInCompany.Position(
                                                 DateUtil.of(1997, Month.SEPTEMBER),
                                                 DateUtil.of(1998, Month.MARCH),
                                                 "6 месяцев обучения цифровым телефонным сетям (Москва)",
@@ -268,13 +270,13 @@ public class ResumeTestData {
                         new Link("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", null),
                         new ArrayList<>(
                                 Arrays.asList(
-                                        new Experience(
+                                        new ExperienceInCompany.Position(
                                                 DateUtil.of(1993, Month.SEPTEMBER),
                                                 DateUtil.of(1996, Month.JUNE),
                                                 "Аспирантура (программист С, С++)",
                                                 ""
                                         ),
-                                        new Experience(
+                                        new ExperienceInCompany.Position(
                                                 DateUtil.of(1987, Month.SEPTEMBER),
                                                 DateUtil.of(1993, Month.JUNE),
                                                 "Инженер (программист Fortran, C)",
@@ -290,7 +292,7 @@ public class ResumeTestData {
                         new Link("Заочная физико-техническая школа при МФТИ", null),
                         new ArrayList<>(
                                 Arrays.asList(
-                                        new Experience(
+                                        new ExperienceInCompany.Position(
                                                 DateUtil.of(1984, Month.SEPTEMBER),
                                                 DateUtil.of(1987, Month.JUNE),
                                                 "Закончил с отличием",
