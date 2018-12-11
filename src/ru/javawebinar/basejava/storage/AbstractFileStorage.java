@@ -3,8 +3,7 @@ package ru.javawebinar.basejava.storage;
 import ru.javawebinar.basejava.exceptions.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +28,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         File[] files = directory.listFiles();
         if (files != null) {
             for (File file : files) {
-                resumeList.add(deRead(file));
+                try {
+                    resumeList.add(doRead(new BufferedInputStream(new FileInputStream(file))));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return resumeList;
@@ -44,18 +47,18 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     protected void saveElement(Resume resume, File file) {
         try {
             file.createNewFile();
-            doWrite(resume, file);
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
+        doUpdate(file, resume);
     }
 
-    protected abstract void doWrite(Resume resume, File file) throws IOException;
+    protected abstract void doWrite(Resume resume, OutputStream file) throws IOException;
 
     @Override
-    protected void updateElement(File file, Resume resume) {
+    protected void doUpdate(File file, Resume resume) {
         try {
-            doWrite(resume, file);
+            doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error before updating", file.getName(), e);
         }
@@ -63,7 +66,9 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void removeElement(File file) {
-        file.delete();
+        if (!file.delete()) {
+            throw new StorageException("File delete error", file.getName());
+        }
     }
 
     @Override
@@ -71,13 +76,16 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         return new File(directory, file);
     }
 
+    protected abstract Resume doRead(InputStream file) throws IOException;
+
     @Override
-    protected Resume getElement(File file) {
-
-        return deRead(file);
+    protected Resume doGet(File file) {
+        try {
+            return doRead(new BufferedInputStream(new FileInputStream(file)));
+        } catch (IOException e) {
+            throw new StorageException("File read error", file.getName(), e);
+        }
     }
-
-    protected abstract Resume deRead(File file);
 
     @Override
     public void clear() {
@@ -85,7 +93,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         File[] files = directory.listFiles();
         if (files != null) {
             for (File file : files) {
-                file.delete();
+                removeElement(file);
             }
         }
     }
