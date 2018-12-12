@@ -17,7 +17,7 @@ public class MapUuidStorage extends AbstractStorage<String> {
     }
 
     @Override
-    protected void updateElement(String searchKey, Resume resume) {
+    protected void doUpdate(String searchKey, Resume resume) {
         storageMap.put( searchKey, resume);
     }
 
@@ -27,7 +27,7 @@ public class MapUuidStorage extends AbstractStorage<String> {
     }
 
     @Override
-    protected Resume getElement(String searchKey) {
+    protected Resume doGet(String searchKey) {
         return storageMap.get(searchKey);
     }
 

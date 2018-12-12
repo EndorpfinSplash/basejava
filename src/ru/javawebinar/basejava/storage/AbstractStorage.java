@@ -21,26 +21,26 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     protected abstract void saveElement(Resume resume, SK searchKey);
 
-    protected abstract void updateElement(SK searchedKey, Resume resume);
+    protected abstract void doUpdate(SK searchedKey, Resume resume);
 
     protected abstract void removeElement(SK uuid);
 
     protected abstract SK getSearchKey(String uuid);
 
-    protected abstract Resume getElement(SK searchKey);
+    protected abstract Resume doGet(SK searchKey);
 
     @Override
     public void update(Resume resume) {
         LOG.info("Update" + resume);
         SK searchKey = getExistedSearchKey(resume.getUuid());
-        updateElement(searchKey, resume);
+        doUpdate(searchKey, resume);
     }
 
     @Override
     public Resume get(String uuid) {
         LOG.info("Get " + uuid);
         SK searchKey = getExistedSearchKey(uuid);
-        return getElement(searchKey);
+        return doGet(searchKey);
     }
 
     @Override

@@ -53,7 +53,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         doUpdate(file, resume);
     }
 
-    protected abstract void doWrite(Resume resume, OutputStream file) throws IOException;
+    protected abstract void doWrite(Resume resume, OutputStream os) throws IOException;
 
     @Override
     protected void doUpdate(File file, Resume resume) {
@@ -76,7 +76,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         return new File(directory, file);
     }
 
-    protected abstract Resume doRead(InputStream file) throws IOException;
+    protected abstract Resume doRead(InputStream is) throws IOException;
 
     @Override
     protected Resume doGet(File file) {

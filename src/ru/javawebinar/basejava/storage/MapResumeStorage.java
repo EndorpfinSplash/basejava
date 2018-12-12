@@ -22,7 +22,7 @@ public class MapResumeStorage extends AbstractStorage<Resume> {
     }
 
     @Override
-    protected void updateElement(Resume oldResume, Resume newResume) {
+    protected void doUpdate(Resume oldResume, Resume newResume) {
         storageMap.put(oldResume.getUuid(), newResume);
     }
 
@@ -32,7 +32,7 @@ public class MapResumeStorage extends AbstractStorage<Resume> {
     }
 
     @Override
-    protected Resume getElement(Resume resume) {
+    protected Resume doGet(Resume resume) {
         return storageMap.get(resume.getUuid());
     }
 

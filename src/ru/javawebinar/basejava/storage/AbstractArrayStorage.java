@@ -30,12 +30,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected Resume getElement(Integer searchKey) {
+    protected Resume doGet(Integer searchKey) {
         return storage[searchKey];
     }
 
     @Override
-    protected void updateElement(Integer searchedKey, Resume resume) {
+    protected void doUpdate(Integer searchedKey, Resume resume) {
         storage[searchedKey] = resume;
     }
 

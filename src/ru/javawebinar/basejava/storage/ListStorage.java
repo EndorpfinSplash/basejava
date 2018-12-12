@@ -19,7 +19,7 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected void updateElement(Integer searchKey, Resume resume) {
+    protected void doUpdate(Integer searchKey, Resume resume) {
         storage.set( searchKey, resume);
     }
 
@@ -34,7 +34,7 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected Resume getElement(Integer searchKey) {
+    protected Resume doGet(Integer searchKey) {
         return storage.get(searchKey);
     }
 

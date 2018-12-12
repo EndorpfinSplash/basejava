@@ -25,7 +25,10 @@ public class MainFile {
         FileInputStream fis = new FileInputStream(filePath);
         System.out.println(fis.read());
 
-        printDirectory(".");
+        String rootCatalog = ".\\storage";
+        System.out.println(new File(rootCatalog).getCanonicalPath());
+
+//        printDirectory(".");
 
     }
 

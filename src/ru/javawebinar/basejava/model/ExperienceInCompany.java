@@ -1,5 +1,6 @@
 package ru.javawebinar.basejava.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
@@ -10,9 +11,13 @@ import java.util.Objects;
 import static ru.javawebinar.basejava.util.DateUtil.NOW;
 import static ru.javawebinar.basejava.util.DateUtil.of;
 
-public class ExperienceInCompany {
+public class ExperienceInCompany  implements Serializable {
+    private static final long serialVersionUID =1L;
+
     private Link company;
     private List<Position> positionList;
+    static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/YYYY");
+
 
     public ExperienceInCompany() {
     }
@@ -51,13 +56,12 @@ public class ExperienceInCompany {
                 positionList;
     }
 
-    public static class Position extends AbstractSection {
+    public static class Position implements Serializable {
         private final LocalDate startDate;
         private final LocalDate endDate;
         private String title;
         private String description;
 
-        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/YYYY");
 
         public Position(int startYear, Month startMonth, int endYear, Month endMonth, String title, String description) {
             this(of(startYear, startMonth), of(endYear, endMonth), title, description);
@@ -95,14 +99,13 @@ public class ExperienceInCompany {
             return Objects.equals(startDate, position.startDate) &&
                     Objects.equals(endDate, position.endDate) &&
                     Objects.equals(title, position.title) &&
-                    Objects.equals(description, position.description) &&
-                    Objects.equals(dateTimeFormatter, position.dateTimeFormatter);
+                    Objects.equals(description, position.description) ;
         }
 
         @Override
         public int hashCode() {
 
-            return Objects.hash(startDate, endDate, title, description, dateTimeFormatter);
+            return Objects.hash(startDate, endDate, title, description);
         }
     }
 }
