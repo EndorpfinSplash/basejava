@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
 
@@ -42,14 +43,14 @@ public abstract class AbstractStorageTest {
     @Test
     public void clear() {
         storage.clear();
-        Assert.assertEquals(0, storage.size());
+        assertEquals(0, storage.size());
     }
 
     @Test
     public void update() {
         RESUME_2.setFullName("Amigo");
         storage.update(RESUME_2);
-        Assert.assertSame(RESUME_2, storage.get(UUID_2));
+        Assert.assertTrue(RESUME_2.equals( storage.get(UUID_2)));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -60,19 +61,19 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAllSorted() {
-        final List<Resume> test_resume_list = new ArrayList<>(Arrays.asList(RESUME_2, RESUME_1, RESUME_3));
+        final List<Resume> test_resume_list = new ArrayList<>(Arrays.asList(RESUME_2, RESUME_3,RESUME_1));
         List<Resume> resumeList = storage.getAllSorted();
         Assert.assertThat(resumeList, is(test_resume_list));
     }
 
     @Test
     public void size() {
-        Assert.assertEquals(3, storage.size());
+        assertEquals(3, storage.size());
     }
 
     @Test
     public void get() {
-        Assert.assertEquals(RESUME_1, storage.get(UUID_1));
+        assertEquals(RESUME_1, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -95,8 +96,8 @@ public abstract class AbstractStorageTest {
     public void save() {
         Resume testResume = new Resume("TestResume");
         storage.save(testResume);
-        Assert.assertEquals(testResume, storage.get(testResume.getUuid()));
-        Assert.assertEquals(4, storage.size());
+        assertEquals(testResume, storage.get(testResume.getUuid()));
+        assertEquals(4, storage.size());
     }
 
     @Test(expected = ExistStorageException.class)
