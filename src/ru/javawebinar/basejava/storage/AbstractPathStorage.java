@@ -4,32 +4,32 @@ import ru.javawebinar.basejava.exceptions.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractPathStorage extends AbstractStorage<File> {
-    private File directory;
+public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+    private Path directory;
 
-    protected AbstractPathStorage(File directory) {
+    protected AbstractPathStorage(String dir) {
+        directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");
-        if (!directory.isDirectory()) {
-            throw new IllegalArgumentException(directory.getAbsolutePath() + " is not directory");
+        if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
+            throw new IllegalArgumentException(dir + " is not directory");
         }
-        if (!directory.canRead() || !directory.canWrite()) {
-            throw new IllegalArgumentException(directory.getAbsolutePath() + " is not readable/writable");
-        }
-        this.directory = directory;
     }
 
     @Override
     protected List<Resume> getAllFromStorage() {
         List<Resume> resumeList = new ArrayList<>();
-        File[] files = directory.listFiles();
+        Path[] files = directory.listPaths();
         if (files != null) {
-            for (File file : files) {
+            for (Path file : files) {
                 try {
-                    resumeList.add(doRead(new BufferedInputStream(new FileInputStream(file))));
+                    resumeList.add(doRead(new BufferedInputStream(new PathInputStream(file))));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -39,14 +39,14 @@ public abstract class AbstractPathStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected boolean isExist(File file) {
+    protected boolean isExist(Path file) {
         return file.exists();
     }
 
     @Override
-    protected void saveElement(Resume resume, File file) {
+    protected void saveElement(Resume resume, Path file) {
         try {
-            file.createNewFile();
+            file.createNewPath();
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
@@ -56,50 +56,48 @@ public abstract class AbstractPathStorage extends AbstractStorage<File> {
     protected abstract void doWrite(Resume resume, OutputStream os) throws IOException;
 
     @Override
-    protected void doUpdate(File file, Resume resume) {
+    protected void doUpdate(Path file, Resume resume) {
         try {
-            doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
+            doWrite(resume, new BufferedOutputStream(new PathOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error before updating", file.getName(), e);
         }
     }
 
     @Override
-    protected void removeElement(File file) {
+    protected void removeElement(Path file) {
         if (!file.delete()) {
-            throw new StorageException("File delete error", file.getName());
+            throw new StorageException("Path delete error", file.getName());
         }
     }
 
     @Override
-    protected File getSearchKey(String file) {
-        return new File(directory, file);
+    protected Path getSearchKey(String file) {
+        return new Path(directory, file);
     }
 
     protected abstract Resume doRead(InputStream is) throws IOException;
 
     @Override
-    protected Resume doGet(File file) {
+    protected Resume doGet(Path file) {
         try {
-            return doRead(new BufferedInputStream(new FileInputStream(file)));
+            return doRead(new BufferedInputStream(new PathInputStream(file)));
         } catch (IOException e) {
-            throw new StorageException("File read error", file.getName(), e);
+            throw new StorageException("Path read error", file.getName(), e);
         }
     }
 
     @Override
     public void clear() {
-
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                removeElement(file);
-            }
+        try {
+            Files.list(directory).forEach(this::removeElement);
+        } catch (IOException e) {
+            throw new StorageException("Path delete error", null);
         }
     }
 
     @Override
     public int size() {
-        return Objects.requireNonNull(directory.listFiles()).length;
+        return Objects.requireNonNull(directory.listPaths()).length;
     }
 }

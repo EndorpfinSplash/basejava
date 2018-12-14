@@ -12,7 +12,6 @@ public class ObjectStreamStorage extends AbstractFileStorage {
 
     @Override
     protected void doWrite(Resume resume, OutputStream os) throws IOException {
-
         try (ObjectOutputStream oos = new ObjectOutputStream(os)) {
             oos.writeObject(resume);
         }
