@@ -46,14 +46,14 @@ public class MainArray {
                     printAll();
                     break;
                 case "doGet":
-                    System.out.println(ARRAY_STORAGE.doGet(uuid));
+//                    System.out.println(ARRAY_STORAGE.doGet(uuid));
                     break;
                 case "clear":
                     ARRAY_STORAGE.clear();
                     printAll();
                     break;
                 case "update":
-                    ARRAY_STORAGE.update(ARRAY_STORAGE.doGet(uuid));
+//                    ARRAY_STORAGE.update(ARRAY_STORAGE.doGet(uuid));
                     break;
                 case "exit":
                     return;

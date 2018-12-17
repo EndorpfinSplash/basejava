@@ -11,11 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
     private Path directory;
+    private SavingStrategy strategy;
 
-    protected AbstractPathStorage(String dir) {
-        directory = Paths.get(dir);
+    protected PathStorage(File dir, SavingStrategy strategy) {
+        this.strategy = strategy;
+        directory = dir.toPath();
         Objects.requireNonNull(directory, "directory must not be null");
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + " is not directory");
@@ -34,7 +36,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
         if (files != null) {
             for (Path file : files) {
                 try {
-                    resumeList.add(doRead(new BufferedInputStream(new FileInputStream(file.toFile()))));
+                    resumeList.add(strategy.doRead(new BufferedInputStream(new FileInputStream(file.toFile()))));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -58,12 +60,10 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
         doUpdate(file, resume);
     }
 
-    protected abstract void doWrite(Resume resume, OutputStream os) throws IOException;
-
     @Override
     protected void doUpdate(Path file, Resume resume) {
         try {
-            doWrite(resume, new BufferedOutputStream(new FileOutputStream(file.toFile())));
+            strategy.doWrite(resume, new BufferedOutputStream(new FileOutputStream(file.toFile())));
         } catch (IOException e) {
             throw new StorageException("IO error before updating", file.getFileName().toString(), e);
         }
@@ -81,12 +81,11 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
         return Paths.get(file);
     }
 
-    protected abstract Resume doRead(InputStream is) throws IOException;
 
     @Override
     protected Resume doGet(Path file) {
         try {
-            return doRead(new BufferedInputStream(new FileInputStream(file.toFile())));
+            return strategy.doRead(new BufferedInputStream(new FileInputStream(file.toFile())));
         } catch (IOException e) {
             throw new StorageException("Path read error", file.toString(), e);
         }

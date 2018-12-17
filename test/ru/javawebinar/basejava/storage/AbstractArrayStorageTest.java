@@ -5,11 +5,7 @@ import org.junit.Test;
 import ru.javawebinar.basejava.exceptions.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import java.io.File;
-
 public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
-
-    protected static final File STORAGE_DIR = new File(".\\storage");
 
     protected AbstractArrayStorageTest(Storage storage) {
         super(storage);
