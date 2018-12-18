@@ -15,9 +15,9 @@ public class PathStorage extends AbstractStorage<Path> {
     private Path directory;
     private SavingStrategy strategy;
 
-    protected PathStorage(File dir, SavingStrategy strategy) {
+    protected PathStorage(String dir, SavingStrategy strategy) {
         this.strategy = strategy;
-        directory = dir.toPath();
+        directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + " is not directory");

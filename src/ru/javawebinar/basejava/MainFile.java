@@ -3,6 +3,7 @@ package ru.javawebinar.basejava;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Path;
 
 public class MainFile {
 
@@ -27,6 +28,10 @@ public class MainFile {
 
         String rootCatalog = ".\\storage";
         System.out.println(new File(rootCatalog).getCanonicalPath());
+        File f = new File(rootCatalog);
+        Path p = f.toPath();
+        System.out.println(p.getFileName());
+        System.out.println(f.getCanonicalPath());
 
 //        printDirectory(".");
 
