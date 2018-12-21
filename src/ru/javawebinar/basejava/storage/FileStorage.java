@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AbstractFileStorage2 extends AbstractStorage<File> {
+public class FileStorage extends AbstractStorage<File> {
     private File directory;
 
     private SavingStrategy strategy;
 
-    protected AbstractFileStorage2(File directory) {
+    protected FileStorage(File directory) {
         Objects.requireNonNull(directory, "directory must not be null");
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not directory");
@@ -24,7 +24,7 @@ public class AbstractFileStorage2 extends AbstractStorage<File> {
         this.directory = directory;
     }
 
-    protected AbstractFileStorage2(File directory, SavingStrategy strategy) {
+    protected FileStorage(File directory, SavingStrategy strategy) {
         this.strategy = strategy;
         Objects.requireNonNull(directory, "directory must not be null");
         if (!directory.isDirectory()) {

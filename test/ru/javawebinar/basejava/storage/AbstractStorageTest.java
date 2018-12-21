@@ -65,7 +65,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAllSorted() {
-        final List<Resume> test_resume_list = new ArrayList<>(Arrays.asList(RESUME_2, RESUME_3,RESUME_1));
+        final List<Resume> test_resume_list = new ArrayList<>(Arrays.asList(RESUME_2, RESUME_1,RESUME_3));
         List<Resume> resumeList = storage.getAllSorted();
         Assert.assertThat(resumeList, is(test_resume_list));
     }

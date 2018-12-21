@@ -11,7 +11,8 @@ import org.junit.runners.Suite;
         ListStorageTest.class,
         MapUuidStorageTest.class,
         MapResumeStorageTest.class,
-        ObjectStreamStorageTest.class
+        FileStorageOnStreamTest.class,
+        PathStorageOnStreamTest.class
 })
 public class SuiteTestClass {
 }

@@ -29,25 +29,24 @@ public class PathStorage extends AbstractStorage<Path> {
         List<Resume> resumeList = new ArrayList<>();
         Path[] files = new Path[0];
         try {
-            files = (Path[]) Files.list(directory).toArray();
+              Files.list(directory).forEach(r -> {
+                  try {
+                      resumeList.add(strategy.doRead(new BufferedInputStream(new FileInputStream(r.toFile()))));
+                  } catch (IOException e) {
+                      e.printStackTrace();
+                  }
+              });
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (files != null) {
-            for (Path file : files) {
-                try {
-                    resumeList.add(strategy.doRead(new BufferedInputStream(new FileInputStream(file.toFile()))));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+
         return resumeList;
     }
 
     @Override
     protected boolean isExist(Path file) {
-        return file.toFile().exists();
+
+        return Files.exists(file);
     }
 
     @Override
@@ -78,7 +77,7 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected Path getSearchKey(String file) {
-        return Paths.get(file);
+        return directory.resolve(file);
     }
 
 
@@ -102,6 +101,12 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     public int size() {
-        return directory.getNameCount();
+
+        try {
+            return (int) Files.list(directory).count();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    return 0;
     }
 }
