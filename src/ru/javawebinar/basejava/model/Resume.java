@@ -14,8 +14,8 @@ public class Resume implements Serializable {
     // Unique identifier
     private String uuid;
     private String fullName;
-    private Map<ContactType, String> Contacts = new EnumMap<>(ContactType.class);
-    private Map<SectionType, AbstractSection> Sections = new EnumMap<>(SectionType.class);
+    private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+    private Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -29,8 +29,8 @@ public class Resume implements Serializable {
     public Resume(String uuid, String fullName, Map<ContactType, String> contacts, Map<SectionType, AbstractSection> sections) {
         this.uuid = uuid;
         this.fullName = fullName;
-        Contacts = contacts;
-        Sections = sections;
+        this.contacts = contacts;
+        this.sections = sections;
     }
 
     public String getFullName() {
@@ -50,30 +50,30 @@ public class Resume implements Serializable {
     }
 
     public Map<SectionType, AbstractSection> getSections() {
-        return Sections;
+        return sections;
     }
 
     public void setSections(Map<SectionType, AbstractSection> sections) {
-        Sections = sections;
+        this.sections = sections;
     }
 
     public Map<ContactType, String> getContacts() {
-        return Contacts;
+        return contacts;
     }
 
     public void setContacts(Map<ContactType, String> contacts) {
-        Contacts = contacts;
+        this.contacts = contacts;
     }
 
     @Override
     public String toString() {
         String contacts = "";
         String sections = "";
-        for (Map.Entry<ContactType, String> entry : Contacts.entrySet()) {
+        for (Map.Entry<ContactType, String> entry : this.contacts.entrySet()) {
             contacts = contacts + entry.getKey().getType() + ": " + entry.getValue() + "\n";
         }
 
-        for (Map.Entry<SectionType, AbstractSection> entry : Sections.entrySet()) {
+        for (Map.Entry<SectionType, AbstractSection> entry : this.sections.entrySet()) {
             sections = sections + entry.getKey().getTitle() + "\n" + entry.getValue() +
                     "\n --------------------------------------------------------------------------------------------------\n";
         }
@@ -97,12 +97,12 @@ public class Resume implements Serializable {
         Resume resume = (Resume) o;
         return Objects.equals(uuid, resume.uuid) &&
                 Objects.equals(fullName, resume.fullName) &&
-                Objects.equals(Contacts, resume.Contacts) &&
-                Objects.equals(Sections, resume.Sections);
+                Objects.equals(contacts, resume.contacts) &&
+                Objects.equals(sections, resume.sections);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, fullName, Contacts, Sections);
+        return Objects.hash(uuid, fullName, contacts, sections);
     }
 }

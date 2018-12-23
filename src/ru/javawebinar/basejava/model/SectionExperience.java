@@ -3,11 +3,11 @@ package ru.javawebinar.basejava.model;
 import java.util.List;
 import java.util.Objects;
 
-public class ExperienceSection extends AbstractSection {
+public class SectionExperience extends AbstractSection {
 
     private final List<ExperienceInCompany> experienceInCompanies;
 
-    public ExperienceSection(List<ExperienceInCompany> experienceInCompanies) {
+    public SectionExperience(List<ExperienceInCompany> experienceInCompanies) {
         Objects.requireNonNull(experienceInCompanies, "organizations must not be null");
         this.experienceInCompanies = experienceInCompanies;
     }
@@ -30,7 +30,7 @@ public class ExperienceSection extends AbstractSection {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ExperienceSection that = (ExperienceSection) o;
+        SectionExperience that = (SectionExperience) o;
         return Objects.equals(experienceInCompanies, that.experienceInCompanies);
     }
 

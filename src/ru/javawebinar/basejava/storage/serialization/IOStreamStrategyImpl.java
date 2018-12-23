@@ -1,11 +1,11 @@
-package ru.javawebinar.basejava.storage;
+package ru.javawebinar.basejava.storage.serialization;
 
 import ru.javawebinar.basejava.exceptions.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.io.*;
 
-public class IOStreamStrategyImpl implements SavingStrategy {
+public class IOStreamStrategyImpl implements SerializationStrategy {
 
     @Override
     public void doWrite(Resume resume, OutputStream os) throws IOException {

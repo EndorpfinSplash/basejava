@@ -15,11 +15,11 @@ public class ResumeTestData {
     public static void main(String[] args) {
 
 
-        System.out.println(createResume());
+        System.out.println(createResume("111", "Григорий Кислин"));
     }
 
-    public static Resume createResume() {
-        Resume resume = new Resume("111", "Григорий Кислин");
+    public static Resume createResume(String uuid, String name) {
+        Resume resume = new Resume(uuid, name);
 
         resume.getContacts().put(ContactType.PHONE, "+7(921) 855-0482");
         resume.getContacts().put(ContactType.SKYPE, "grigory.kislin");
@@ -194,9 +194,9 @@ public class ResumeTestData {
                 )
         );
 
-        ExperienceSection experienceSection = new ExperienceSection(experienceInCompanies);
+        SectionExperience sectionExperience = new SectionExperience(experienceInCompanies);
 
-        resume.getSections().put(SectionType.EXPERIENCE, experienceSection);
+        resume.getSections().put(SectionType.EXPERIENCE, sectionExperience);
 
 
         List<ExperienceInCompany> educationInCompanies = new ArrayList<>();
@@ -303,7 +303,7 @@ public class ResumeTestData {
                 )
         );
 
-        resume.getSections().put(SectionType.EDUCATION, new ExperienceSection(educationInCompanies));
+        resume.getSections().put(SectionType.EDUCATION, new SectionExperience(educationInCompanies));
         return resume;
     }
 }

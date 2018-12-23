@@ -45,7 +45,7 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     @Override
     public void save(Resume resume) {
-        LOG.info("save " + resume);
+//        LOG.info("save " + resume);
         SK searchKey = getNotExistedSearchKey(resume.getUuid());
         saveElement(resume, searchKey);
     }
@@ -58,7 +58,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     }
 
     public List<Resume> getAllSorted() {
-        LOG.info("getAllSorted" );
+//        LOG.info("getAllSorted" );
         List<Resume> resumeList = getAllFromStorage();
         resumeList.sort(RESUME_COMPARATOR);
         return resumeList;

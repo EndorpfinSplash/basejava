@@ -18,10 +18,6 @@ public class ExperienceInCompany  implements Serializable {
     private List<Position> positionList;
     static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/YYYY");
 
-
-    public ExperienceInCompany() {
-    }
-
     public ExperienceInCompany(Link company, List<Position> positionList) {
         this.company = company;
         this.positionList = positionList;
