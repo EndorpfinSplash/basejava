@@ -10,8 +10,6 @@ import static ru.javawebinar.basejava.util.DateUtil.NOW;
 
 public class ResumeTestData {
     public static void main(String[] args) {
-
-
         System.out.println(createResume("111", "Григорий Кислин"));
     }
 

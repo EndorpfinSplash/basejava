@@ -95,13 +95,26 @@ public class ExperienceInCompany  implements Serializable {
             return Objects.equals(startDate, position.startDate) &&
                     Objects.equals(endDate, position.endDate) &&
                     Objects.equals(title, position.title) &&
-                    Objects.equals(description, position.description) ;
+                    Objects.equals(description, position.description);
         }
 
         @Override
         public int hashCode() {
-
             return Objects.hash(startDate, endDate, title, description);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ExperienceInCompany that = (ExperienceInCompany) o;
+        return Objects.equals(company, that.company) &&
+                Objects.equals(positionList, that.positionList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(company, positionList);
     }
 }
