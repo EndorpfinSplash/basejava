@@ -20,9 +20,9 @@ public abstract class AbstractStorageTest {
     protected Storage storage;
 
     private static final String UUID_1 = "uuid1";
-    private static final Resume R1 = new Resume(UUID_1, "A");
+    private static final Resume R1 = ResumeTestData.createResume(UUID_1, "A");
     private static final String UUID_2 = "uuid2";
-    private static final Resume R2 = new Resume(UUID_2, "B");
+    private static final Resume R2 = ResumeTestData.createResume(UUID_2, "B");
     private static final String UUID_3 = "uuid3";
     private static final Resume R3 = ResumeTestData.createResume(UUID_3, "Григорий Кислин");
     //new Resume(UUID_3, "C");
@@ -62,7 +62,7 @@ public abstract class AbstractStorageTest {
     public void getAllSorted() {
         List<Resume> resumeList = storage.getAllSorted();
         assertEquals(3, resumeList.size());
-        assertEquals(resumeList, Arrays.asList(R1, R2, R3));
+        assertEquals(Arrays.asList(R1, R2, R3), resumeList);
     }
 
     @Test

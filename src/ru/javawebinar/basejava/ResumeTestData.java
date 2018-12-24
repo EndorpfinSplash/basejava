@@ -4,10 +4,7 @@ import ru.javawebinar.basejava.model.*;
 import ru.javawebinar.basejava.util.DateUtil;
 
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static ru.javawebinar.basejava.util.DateUtil.NOW;
 
@@ -21,16 +18,22 @@ public class ResumeTestData {
     public static Resume createResume(String uuid, String name) {
         Resume resume = new Resume(uuid, name);
 
-        resume.getContacts().put(ContactType.PHONE, "+7(921) 855-0482");
-        resume.getContacts().put(ContactType.SKYPE, "grigory.kislin");
-        resume.getContacts().put(ContactType.EMAIL, "gkislin@yandex.ru");
-        resume.getContacts().put(ContactType.LINKEDIN, "https://www.LINKEDIN.com/in/gkislin");
-        resume.getContacts().put(ContactType.GITHUB, "https://GITHUB.com/gkislin");
-        resume.getContacts().put(ContactType.STACKOWERFLOW, "https://stackoverflow.com/users/548473");
-        resume.getContacts().put(ContactType.HOMPAGE, "http://gkislin.ru/");
+        Map<ContactType, String> contact_map = new EnumMap<>(ContactType.class);
+        contact_map.put(ContactType.PHONE, "+7(921) 855-0482");
+        contact_map.put(ContactType.SKYPE, "grigory.kislin");
+        contact_map.put(ContactType.EMAIL, "gkislin@yandex.ru");
+        contact_map.put(ContactType.LINKEDIN, "https://www.LINKEDIN.com/in/gkislin");
+        contact_map.put(ContactType.GITHUB, "https://GITHUB.com/gkislin");
+        contact_map.put(ContactType.STACKOWERFLOW, "https://stackoverflow.com/users/548473");
+        contact_map.put(ContactType.HOMPAGE, "http://gkislin.ru/");
 
-        resume.getSections().put(SectionType.OBJECTIVE, new SectionWithText("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
-        resume.getSections().put(SectionType.PERSONAL, new SectionWithText("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
+        resume.setContacts(contact_map);
+
+        Map<SectionType, AbstractSection> section_map = new EnumMap<>(SectionType.class);
+
+
+        section_map.put(SectionType.OBJECTIVE, new SectionWithText("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
+        section_map.put(SectionType.PERSONAL, new SectionWithText("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
 
         List<String> achievementList = new LinkedList<String>() {{
             add("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.");
@@ -41,7 +44,7 @@ public class ResumeTestData {
             add("Реализация протоколов по приему платежей всех основных платежных системы России (Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.");
         }};
 
-        resume.getSections().put(SectionType.ACHIEVEMENT, new SectionWithListOfString(achievementList));
+        section_map.put(SectionType.ACHIEVEMENT, new SectionWithListOfString(achievementList));
 
         List<String> qualificationList = new LinkedList<String>() {{
             add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
@@ -62,7 +65,7 @@ public class ResumeTestData {
             add("Родной русский, английский \"upper intermediate\"");
         }};
 
-        resume.getSections().put(SectionType.QUALIFICATIONS, new SectionWithListOfString(qualificationList));
+        section_map.put(SectionType.QUALIFICATIONS, new SectionWithListOfString(qualificationList));
 
         List<ExperienceInCompany> experienceInCompanies = new ArrayList<>();
 
@@ -196,7 +199,7 @@ public class ResumeTestData {
 
         SectionExperience sectionExperience = new SectionExperience(experienceInCompanies);
 
-        resume.getSections().put(SectionType.EXPERIENCE, sectionExperience);
+        section_map.put(SectionType.EXPERIENCE, sectionExperience);
 
 
         List<ExperienceInCompany> educationInCompanies = new ArrayList<>();
@@ -303,7 +306,8 @@ public class ResumeTestData {
                 )
         );
 
-        resume.getSections().put(SectionType.EDUCATION, new SectionExperience(educationInCompanies));
+        section_map.put(SectionType.EDUCATION, new SectionExperience(educationInCompanies));
+        resume.setSections(section_map);
         return resume;
     }
 }
