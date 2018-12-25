@@ -5,9 +5,9 @@ import ru.javawebinar.basejava.storage.serialization.IOStreamStrategyImpl;
 
 import java.io.IOException;
 
-public class PathStorageOnStreamTest extends AbstractStorageTest {
+public class ObjectPathStorageOnStreamTest extends AbstractStorageTest {
 
-    public PathStorageOnStreamTest() throws IOException {
+    public ObjectPathStorageOnStreamTest() throws IOException {
         super(new PathStorage(STORAGE_DIR.getAbsolutePath(), new IOStreamStrategyImpl()));
     }
 }

@@ -49,7 +49,7 @@ public class FileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected void saveElement(Resume resume, File file) {
+    protected void doSave(Resume resume, File file) {
         try {
             file.createNewFile();
         } catch (IOException e) {
@@ -68,7 +68,7 @@ public class FileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected void removeElement(File file) {
+    protected void doDelete(File file) {
         if (!file.delete()) {
             throw new StorageException("File delete error", file.getName());
         }
@@ -95,7 +95,7 @@ public class FileStorage extends AbstractStorage<File> {
         File[] files = directory.listFiles();
         if (files != null) {
             for (File file : files) {
-                removeElement(file);
+                doDelete(file);
             }
         }
     }

@@ -49,14 +49,14 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected void removeElement(Integer searchKey) {
+    protected void doDelete(Integer searchKey) {
         removeElement(searchKey.intValue());
         storage[size - 1] = null;
         size--;
     }
 
     @Override
-    protected void saveElement(Resume resume, Integer searchKey) {
+    protected void doSave(Resume resume, Integer searchKey) {
         if (size >= AbstractArrayStorage.STORAGE_LIMIT) {
             throw new StorageException("Storage limit overflow", resume.getUuid());
         }

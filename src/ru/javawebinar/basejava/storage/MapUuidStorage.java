@@ -22,7 +22,7 @@ public class MapUuidStorage extends AbstractStorage<String> {
     }
 
     @Override
-    protected void saveElement(Resume resume, String searchKey) {
+    protected void doSave(Resume resume, String searchKey) {
         storageMap.put(searchKey, resume);
     }
 
@@ -32,7 +32,7 @@ public class MapUuidStorage extends AbstractStorage<String> {
     }
 
     @Override
-    protected void removeElement(String searchKey) {
+    protected void doDelete(String searchKey) {
         storageMap.remove(searchKey);
     }
 

@@ -19,11 +19,11 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     protected abstract boolean isExist(SK searchedKey);
 
-    protected abstract void saveElement(Resume resume, SK searchKey);
+    protected abstract void doSave(Resume resume, SK searchKey);
 
     protected abstract void doUpdate(SK searchedKey, Resume resume);
 
-    protected abstract void removeElement(SK uuid);
+    protected abstract void doDelete(SK uuid);
 
     protected abstract SK getSearchKey(String uuid);
 
@@ -47,14 +47,14 @@ public abstract class AbstractStorage<SK> implements Storage {
     public void save(Resume resume) {
 //        LOG.info("save " + resume);
         SK searchKey = getNotExistedSearchKey(resume.getUuid());
-        saveElement(resume, searchKey);
+        doSave(resume, searchKey);
     }
 
     @Override
     public void delete(String uuid) {
         LOG.info("delete " + uuid);
         SK searchKey = getExistedSearchKey(uuid);
-        removeElement(searchKey);
+        doDelete(searchKey);
     }
 
     public List<Resume> getAllSorted() {
