@@ -3,6 +3,7 @@ package ru.javawebinar.basejava.model;
 import java.util.Objects;
 
 public class SectionWithText extends AbstractSection {
+    private static final long serialVersionUID = 1L;
     private final String content;
 
     public SectionWithText(String content) {
@@ -26,6 +27,6 @@ public class SectionWithText extends AbstractSection {
 
     @Override
     public String toString() {
-        return  content ;
+        return content;
     }
 }
