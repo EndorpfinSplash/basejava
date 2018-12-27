@@ -3,9 +3,13 @@ package ru.javawebinar.basejava.model;
 import java.util.List;
 import java.util.Objects;
 
+
 public class SectionExperience extends AbstractSection {
     private static final long serialVersionUID = 1L;
-    private final List<ExperienceInCompany> experienceInCompanies;
+    private List<ExperienceInCompany> experienceInCompanies;
+
+    public SectionExperience() {
+    }
 
     public SectionExperience(List<ExperienceInCompany> experienceInCompanies) {
         Objects.requireNonNull(experienceInCompanies, "organizations must not be null");

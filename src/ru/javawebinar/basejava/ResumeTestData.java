@@ -30,8 +30,8 @@ public class ResumeTestData {
         Map<SectionType, AbstractSection> sectionMap = new EnumMap<>(SectionType.class);
 
 
-        sectionMap.put(SectionType.OBJECTIVE, new SectionWithText("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
-        sectionMap.put(SectionType.PERSONAL, new SectionWithText("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
+        sectionMap.put(SectionType.OBJECTIVE, new SectionText("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
+        sectionMap.put(SectionType.PERSONAL, new SectionText("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
 
         List<String> achievementList = new LinkedList<String>() {{
             add("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.");
@@ -42,7 +42,7 @@ public class ResumeTestData {
             add("Реализация протоколов по приему платежей всех основных платежных системы России (Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.");
         }};
 
-        sectionMap.put(SectionType.ACHIEVEMENT, new SectionWithListOfString(achievementList));
+        sectionMap.put(SectionType.ACHIEVEMENT, new SectionListOfString(achievementList));
 
         List<String> qualificationList = new LinkedList<String>() {{
             add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
@@ -63,7 +63,7 @@ public class ResumeTestData {
             add("Родной русский, английский \"upper intermediate\"");
         }};
 
-        sectionMap.put(SectionType.QUALIFICATIONS, new SectionWithListOfString(qualificationList));
+        sectionMap.put(SectionType.QUALIFICATIONS, new SectionListOfString(qualificationList));
 
         List<ExperienceInCompany> experienceInCompanies = new ArrayList<>();
 
