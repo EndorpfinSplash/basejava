@@ -13,7 +13,8 @@ import org.junit.runners.Suite;
         MapResumeStorageTest.class,
         ObjectFileStorageOnStreamTest.class,
         ObjectPathStorageOnStreamTest.class,
-        ObjectXmlStorageOnStreamTest.class
+        ObjectXmlStorageOnStreamTest.class,
+        ObjectJsonStorageOnStreamTest.class
 })
 public class SuiteTestClass {
 }
