@@ -14,7 +14,8 @@ import org.junit.runners.Suite;
         ObjectFileStorageOnStreamTest.class,
         ObjectPathStorageOnStreamTest.class,
         ObjectXmlStorageOnStreamTest.class,
-        ObjectJsonStorageOnStreamTest.class
+        ObjectJsonStorageOnStreamTest.class,
+        DataPathStorageOnStreamTest.class
 })
 public class SuiteTestClass {
 }

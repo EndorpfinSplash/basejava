@@ -12,9 +12,10 @@ public class MainReflection {
         Resume r = new Resume("UUID1");
         Field field = r.getClass().getDeclaredFields()[0];
         field.setAccessible(true);
+        System.out.println(r.getClass().getName());
         System.out.println(field.getName());
         System.out.println(field.get(r));
-        field.set(r, "new_uuid");
+//        field.set(r, "new_uuid");
         System.out.println(r);
 
         // TODO : invoke r.toString via reflection

@@ -73,6 +73,10 @@ public class Resume implements Serializable {
         this.contacts = contacts;
     }
 
+    public void addContact(ContactType contactType, String value) {
+        this.contacts.put(contactType, value);
+    }
+
     @Override
     public String toString() {
         String contacts = "";

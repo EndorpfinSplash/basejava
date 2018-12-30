@@ -197,7 +197,7 @@ public class ResumeTestData {
 
         SectionExperience sectionExperience = new SectionExperience(experienceInCompanies);
 
-        sectionMap.put(SectionType.EXPERIENCE, sectionExperience);
+        //sectionMap.put(SectionType.EXPERIENCE, sectionExperience);
 
 
         List<ExperienceInCompany> educationInCompanies = new ArrayList<>();
@@ -304,7 +304,7 @@ public class ResumeTestData {
                 )
         );
 
-        sectionMap.put(SectionType.EDUCATION, new SectionExperience(educationInCompanies));
+       // sectionMap.put(SectionType.EDUCATION, new SectionExperience(educationInCompanies));
         resume.setSections(sectionMap);
         return resume;
     }

@@ -91,6 +91,23 @@ public class ExperienceInCompany  implements Serializable {
             this.description = description;
         }
 
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        public LocalDate getStartDate() {
+            return startDate;
+        }
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        public LocalDate getEndDate() {
+            return endDate;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
         @Override
         public String toString() {
             return dateTimeFormatter.format(startDate) + " - " + dateTimeFormatter.format(endDate) +
