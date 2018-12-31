@@ -17,8 +17,8 @@ import static ru.javawebinar.basejava.util.DateUtil.NOW;
 import static ru.javawebinar.basejava.util.DateUtil.of;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ExperienceInCompany  implements Serializable {
-    private static final long serialVersionUID =1L;
+public class ExperienceInCompany implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     public ExperienceInCompany() {
     }
@@ -91,11 +91,10 @@ public class ExperienceInCompany  implements Serializable {
             this.description = description;
         }
 
-        @XmlJavaTypeAdapter(LocalDateAdapter.class)
         public LocalDate getStartDate() {
             return startDate;
         }
-        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+
         public LocalDate getEndDate() {
             return endDate;
         }
