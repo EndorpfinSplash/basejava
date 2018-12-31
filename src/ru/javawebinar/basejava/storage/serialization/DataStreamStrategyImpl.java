@@ -30,51 +30,50 @@ public class DataStreamStrategyImpl implements SerializationStrategy {
                 dos.writeUTF(entry.getKey().name());
                 String sectType = entry.getValue().getClass().getCanonicalName();
                 dos.writeUTF(sectType);
-                //  dos.writeUTF(entry.getValue());
                 switch (sectType) {
                     case "ru.javawebinar.basejava.model.SectionText":
                         dos.writeUTF(entry.getValue().toString());
                         break;
+
                     case "ru.javawebinar.basejava.model.SectionListOfString":
                         List<String> sectionList = ((SectionListOfString) entry.getValue()).getSectionList();
-                        int size = sectionList.size();
-                        dos.writeInt(size);
-                        for (int i = 0; i < size; i++) {
-                            dos.writeUTF(sectionList.get(i));
-                        }
+                        dos.writeInt(sectionList.size());
+
+                        sectionList.forEach(s -> {
+                            try {
+                                dos.writeUTF(s);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
                         break;
+
                     case "ru.javawebinar.basejava.model.SectionExperience":
                         SectionExperience sectionExperience = ((SectionExperience) entry.getValue());
                         List<ExperienceInCompany> experienceInCompanies = sectionExperience.getExperienceInCompanies();
                         int experienceCount = experienceInCompanies.size();
                         dos.writeInt(experienceCount);
-                        for (int i = 0; i < experienceCount; i++) {
-                            ExperienceInCompany experienceInCompany = experienceInCompanies.get(i);
 
-                            Link company = experienceInCompany.getCompany();
-                            dos.writeUTF(company.getName());
-                            String companyUrl = company.getUrl();
-                            if (companyUrl != null) {
-                                dos.writeUTF(companyUrl);
-                            } else {
-                                dos.writeUTF("null");
+                        experienceInCompanies.forEach(experienceInCompany -> {
+                            try {
+                                dos.writeUTF(experienceInCompany.getCompany().getName());
+                                dos.writeUTF(experienceInCompany.getCompany().getUrl());
+                                List<ExperienceInCompany.Position> positionList = experienceInCompany.getPositionList();
+                                dos.writeInt(positionList.size());
+                                positionList.forEach(position -> {
+                                    try {
+                                        writeLocalDate(dos,position.getStartDate());
+                                        writeLocalDate(dos,position.getEndDate());
+                                        dos.writeUTF(position.getTitle());
+                                        dos.writeUTF(position.getDescription());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                });
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-
-
-                            List<ExperienceInCompany.Position> positionList = experienceInCompany.getPositionList();
-                            int positionCount = positionList.size();
-                            dos.writeInt(positionCount);
-                            for (int j = 0; j < positionCount; j++) {
-                                ExperienceInCompany.Position position = positionList.get(j);
-                                LocalDate stDate = position.getStartDate();
-                                writeLocalDate(dos, stDate);
-                                LocalDate endDate = position.getEndDate();
-                                writeLocalDate(dos, endDate);
-
-                                dos.writeUTF(position.getTitle());
-                                dos.writeUTF(position.getDescription());
-                            }
-                        }
+                        });
                         break;
                 }
             }
@@ -112,10 +111,12 @@ public class DataStreamStrategyImpl implements SerializationStrategy {
                         break;
                     case "ru.javawebinar.basejava.model.SectionListOfString":
                         int listOfStringCount = dis.readInt();
-                        List<String> sectionList = new ArrayList<>();
+                        ArrayList<String> sectionList = new ArrayList<>();
+
                         for (int j = 0; j < listOfStringCount; j++) {
                             sectionList.add(j, dis.readUTF());
                         }
+
                         sections.put(sectionType, new SectionListOfString(sectionList));
                         break;
                     case "ru.javawebinar.basejava.model.SectionExperience":
@@ -125,9 +126,6 @@ public class DataStreamStrategyImpl implements SerializationStrategy {
                         for (int j = 0; j < experienceCount; j++) {
                             String company = dis.readUTF();
                             String url = dis.readUTF();
-                            if ("null".equals(url)) {
-                                url = null;
-                            }
                             Link link = new Link(company, url);
                             int positionCount = dis.readInt();
                             List<ExperienceInCompany.Position> positionList = new ArrayList<>();
