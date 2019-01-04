@@ -6,12 +6,14 @@ import ru.javawebinar.basejava.util.DateUtil;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DataStreamStrategyImpl implements SerializationStrategy {
+
+    public void writeWithException(Collection collection, DataOutputStream dos, MyWriter writer) throws IOException {
+        dos.writeInt(collection.size());
+        writer.write();
+    }
 
     @Override
     public void doWrite(Resume resume, OutputStream os) throws IOException {
@@ -24,6 +26,7 @@ public class DataStreamStrategyImpl implements SerializationStrategy {
                 dos.writeUTF(entry.getKey().name());
                 dos.writeUTF(entry.getValue());
             }
+
             /// Sections text write
             dos.writeInt(resume.getSections().size());
             for (Map.Entry<SectionType, AbstractSection> entry : resume.getSections().entrySet()) {
@@ -37,41 +40,51 @@ public class DataStreamStrategyImpl implements SerializationStrategy {
 
                     case "ru.javawebinar.basejava.model.SectionListOfString":
                         List<String> sectionList = ((SectionListOfString) entry.getValue()).getSectionList();
-                        dos.writeInt(sectionList.size());
 
-                        sectionList.forEach(s -> {
-                            try {
-                                dos.writeUTF(s);
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                        writeWithException(sectionList, dos, new MyWriter(){
+                            @Override
+                            public void write() throws IOException {
+                                sectionList.forEach(s -> {
+                                    try {
+                                        dos.writeUTF(s);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                });
                             }
-                        });
+                        } );
                         break;
 
                     case "ru.javawebinar.basejava.model.SectionExperience":
                         SectionExperience sectionExperience = ((SectionExperience) entry.getValue());
                         List<ExperienceInCompany> experienceInCompanies = sectionExperience.getExperienceInCompanies();
-                        int experienceCount = experienceInCompanies.size();
-                        dos.writeInt(experienceCount);
-
-                        experienceInCompanies.forEach(experienceInCompany -> {
-                            try {
-                                dos.writeUTF(experienceInCompany.getCompany().getName());
-                                dos.writeUTF(experienceInCompany.getCompany().getUrl());
-                                List<ExperienceInCompany.Position> positionList = experienceInCompany.getPositionList();
-                                dos.writeInt(positionList.size());
-                                positionList.forEach(position -> {
+                        writeWithException(experienceInCompanies, dos, new MyWriter() {
+                            @Override
+                            public void write() throws IOException {
+                                experienceInCompanies.forEach(experienceInCompany -> {
                                     try {
-                                        writeLocalDate(dos,position.getStartDate());
-                                        writeLocalDate(dos,position.getEndDate());
-                                        dos.writeUTF(position.getTitle());
-                                        dos.writeUTF(position.getDescription());
+                                        dos.writeUTF(experienceInCompany.getCompany().getName());
+                                        dos.writeUTF(experienceInCompany.getCompany().getUrl());
+                                        List<ExperienceInCompany.Position> positionList = experienceInCompany.getPositionList();
+                                        writeWithException(positionList, dos, new MyWriter() {
+                                            @Override
+                                            public void write() throws IOException {
+                                                positionList.forEach(position -> {
+                                                    try {
+                                                        writeLocalDate(dos,position.getStartDate());
+                                                        writeLocalDate(dos,position.getEndDate());
+                                                        dos.writeUTF(position.getTitle());
+                                                        dos.writeUTF(position.getDescription());
+                                                    } catch (IOException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                });
+                                            }
+                                        });
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
                                 });
-                            } catch (IOException e) {
-                                e.printStackTrace();
                             }
                         });
                         break;
