@@ -41,18 +41,14 @@ public class DataStreamStrategyImpl implements SerializationStrategy {
                     case "ru.javawebinar.basejava.model.SectionListOfString":
                         List<String> sectionList = ((SectionListOfString) entry.getValue()).getSectionList();
 
-                        writeWithException(sectionList, dos, new MyWriter(){
+                        writeWithException(sectionList, dos, new MyWriter() {
                             @Override
                             public void write() throws IOException {
-                                sectionList.forEach(s -> {
-                                    try {
-                                        dos.writeUTF(s);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                });
+                                for (int i = 0; i < sectionList.size(); i++) {
+                                    dos.writeUTF(sectionList.get(i));
+                                }
                             }
-                        } );
+                        });
                         break;
 
                     case "ru.javawebinar.basejava.model.SectionExperience":
@@ -61,30 +57,26 @@ public class DataStreamStrategyImpl implements SerializationStrategy {
                         writeWithException(experienceInCompanies, dos, new MyWriter() {
                             @Override
                             public void write() throws IOException {
-                                experienceInCompanies.forEach(experienceInCompany -> {
-                                    try {
-                                        dos.writeUTF(experienceInCompany.getCompany().getName());
-                                        dos.writeUTF(experienceInCompany.getCompany().getUrl());
-                                        List<ExperienceInCompany.Position> positionList = experienceInCompany.getPositionList();
-                                        writeWithException(positionList, dos, new MyWriter() {
-                                            @Override
-                                            public void write() throws IOException {
-                                                positionList.forEach(position -> {
-                                                    try {
-                                                        writeLocalDate(dos,position.getStartDate());
-                                                        writeLocalDate(dos,position.getEndDate());
-                                                        dos.writeUTF(position.getTitle());
-                                                        dos.writeUTF(position.getDescription());
-                                                    } catch (IOException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                });
+                                for (int i = 0; i < experienceInCompanies.size(); i++) {
+                                    ExperienceInCompany experienceInCompany = experienceInCompanies.get(i);
+                                    dos.writeUTF(experienceInCompany.getCompany().getName());
+                                    dos.writeUTF(experienceInCompany.getCompany().getUrl());
+
+                                    List<ExperienceInCompany.Position> positionList = experienceInCompany.getPositionList();
+                                    writeWithException(positionList, dos, new MyWriter() {
+                                        @Override
+                                        public void write() throws IOException {
+                                            for (int j = 0; j < positionList.size(); j++) {
+                                                ExperienceInCompany.Position position = positionList.get(j);
+                                                writeLocalDate(dos, position.getStartDate());
+                                                writeLocalDate(dos, position.getEndDate());
+                                                dos.writeUTF(position.getTitle());
+                                                dos.writeUTF(position.getDescription());
                                             }
-                                        });
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                });
+                                        }
+                                    });
+                                }
+
                             }
                         });
                         break;
