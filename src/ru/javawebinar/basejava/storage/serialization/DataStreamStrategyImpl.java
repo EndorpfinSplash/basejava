@@ -76,7 +76,6 @@ public class DataStreamStrategyImpl implements SerializationStrategy {
                                         }
                                     });
                                 }
-
                             }
                         });
                         break;
@@ -112,7 +111,7 @@ public class DataStreamStrategyImpl implements SerializationStrategy {
                 switch (secType) {
                     case "ru.javawebinar.basejava.model.SectionText":
                         SectionText sectionText = new SectionText(dis.readUTF());
-                        sections.put(sectionType,sectionText);
+                        sections.put(sectionType, sectionText);
                         break;
                     case "ru.javawebinar.basejava.model.SectionListOfString":
                         int listOfStringCount = dis.readInt();
@@ -135,13 +134,13 @@ public class DataStreamStrategyImpl implements SerializationStrategy {
                             int positionCount = dis.readInt();
                             List<ExperienceInCompany.Position> positionList = new ArrayList<>();
                             for (int k = 0; k < positionCount; k++) {
-                                LocalDate stDate  = DateUtil.of(dis.readInt(), Month.of(dis.readInt()));
+                                LocalDate stDate = DateUtil.of(dis.readInt(), Month.of(dis.readInt()));
                                 LocalDate endDate = DateUtil.of(dis.readInt(), Month.of(dis.readInt()));
                                 String title = dis.readUTF();
                                 String description = dis.readUTF();
-                                positionList.add(k, new ExperienceInCompany.Position(stDate,endDate,title,description));
+                                positionList.add(k, new ExperienceInCompany.Position(stDate, endDate, title, description));
                             }
-                            experienceInCompanies.add(j, new ExperienceInCompany(link,positionList));
+                            experienceInCompanies.add(j, new ExperienceInCompany(link, positionList));
                         }
                         sections.put(sectionType, new SectionExperience(experienceInCompanies));
                         break;
