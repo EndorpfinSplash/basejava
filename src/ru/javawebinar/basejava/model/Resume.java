@@ -77,6 +77,9 @@ public class Resume implements Serializable {
         this.contacts.put(contactType, value);
     }
 
+    public void addSection(SectionType type, AbstractSection section) {
+        sections.put(type, section);
+    }
     @Override
     public String toString() {
         String contacts = "";
