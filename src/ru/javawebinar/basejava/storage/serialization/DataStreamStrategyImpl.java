@@ -10,9 +10,12 @@ import java.util.*;
 
 public class DataStreamStrategyImpl implements SerializationStrategy {
 
-    public void writeWithException(Collection collection, DataOutputStream dos, MyWriter writer) throws IOException {
-        dos.writeInt(collection.size());
-        writer.write();
+    <E> void writeWithException(Collection<E> collection, DataOutputStream dos, MyWriter<E> writer) throws IOException {
+        int size = collection.size();
+        dos.writeInt(size);
+        for (E item : collection) {
+            writer.write(item);
+        }
     }
 
     @Override
@@ -41,12 +44,10 @@ public class DataStreamStrategyImpl implements SerializationStrategy {
                     case "ru.javawebinar.basejava.model.SectionListOfString":
                         List<String> sectionList = ((SectionListOfString) entry.getValue()).getSectionList();
 
-                        writeWithException(sectionList, dos, new MyWriter() {
+                        writeWithException(sectionList, dos, new MyWriter<String>() {
                             @Override
-                            public void write() throws IOException {
-                                for (int i = 0; i < sectionList.size(); i++) {
-                                    dos.writeUTF(sectionList.get(i));
-                                }
+                            public void write(String s) throws IOException {
+                                dos.writeUTF(s);
                             }
                         });
                         break;
@@ -54,28 +55,23 @@ public class DataStreamStrategyImpl implements SerializationStrategy {
                     case "ru.javawebinar.basejava.model.SectionExperience":
                         SectionExperience sectionExperience = ((SectionExperience) entry.getValue());
                         List<ExperienceInCompany> experienceInCompanies = sectionExperience.getExperienceInCompanies();
-                        writeWithException(experienceInCompanies, dos, new MyWriter() {
-                            @Override
-                            public void write() throws IOException {
-                                for (int i = 0; i < experienceInCompanies.size(); i++) {
-                                    ExperienceInCompany experienceInCompany = experienceInCompanies.get(i);
-                                    dos.writeUTF(experienceInCompany.getCompany().getName());
-                                    dos.writeUTF(experienceInCompany.getCompany().getUrl());
 
-                                    List<ExperienceInCompany.Position> positionList = experienceInCompany.getPositionList();
-                                    writeWithException(positionList, dos, new MyWriter() {
-                                        @Override
-                                        public void write() throws IOException {
-                                            for (int j = 0; j < positionList.size(); j++) {
-                                                ExperienceInCompany.Position position = positionList.get(j);
-                                                writeLocalDate(dos, position.getStartDate());
-                                                writeLocalDate(dos, position.getEndDate());
-                                                dos.writeUTF(position.getTitle());
-                                                dos.writeUTF(position.getDescription());
-                                            }
-                                        }
-                                    });
-                                }
+                        writeWithException(experienceInCompanies, dos, new MyWriter<ExperienceInCompany>() {
+                            @Override
+                            public void write(ExperienceInCompany experienceInCompany) throws IOException {
+                                dos.writeUTF(experienceInCompany.getCompany().getName());
+                                dos.writeUTF(experienceInCompany.getCompany().getUrl());
+
+                                List<ExperienceInCompany.Position> positionList = experienceInCompany.getPositionList();
+                                writeWithException(positionList, dos, new MyWriter<ExperienceInCompany.Position>() {
+                                    @Override
+                                    public void write(ExperienceInCompany.Position position) throws IOException {
+                                        writeLocalDate(dos, position.getStartDate());
+                                        writeLocalDate(dos, position.getEndDate());
+                                        dos.writeUTF(position.getTitle());
+                                        dos.writeUTF(position.getDescription());
+                                    }
+                                });
                             }
                         });
                         break;
@@ -87,6 +83,16 @@ public class DataStreamStrategyImpl implements SerializationStrategy {
     private void writeLocalDate(DataOutputStream dos, LocalDate stDate) throws IOException {
         dos.writeInt(stDate.getYear());
         dos.writeInt(stDate.getMonth().getValue());
+    }
+
+
+    <E> List<E> readList(DataInputStream dis, MyReader<E> myReader) throws IOException {
+        int size = dis.readInt();
+        List<E> list = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            list.add(myReader.read());
+        }
+        return list;
     }
 
     @Override
@@ -113,36 +119,43 @@ public class DataStreamStrategyImpl implements SerializationStrategy {
                         SectionText sectionText = new SectionText(dis.readUTF());
                         sections.put(sectionType, sectionText);
                         break;
+
                     case "ru.javawebinar.basejava.model.SectionListOfString":
-                        int listOfStringCount = dis.readInt();
-                        ArrayList<String> sectionList = new ArrayList<>();
-
-                        for (int j = 0; j < listOfStringCount; j++) {
-                            sectionList.add(j, dis.readUTF());
-                        }
-
-                        sections.put(sectionType, new SectionListOfString(sectionList));
+                        SectionListOfString sectionListOfString = new SectionListOfString(
+                                readList(dis, new MyReader<String>() {
+                                    @Override
+                                    public String read() throws IOException {
+                                        return dis.readUTF();
+                                    }
+                                })
+                        );
+                        sections.put(sectionType, sectionListOfString);
                         break;
-                    case "ru.javawebinar.basejava.model.SectionExperience":
-                        int experienceCount = dis.readInt();
 
-                        List<ExperienceInCompany> experienceInCompanies = new ArrayList<>();
-                        for (int j = 0; j < experienceCount; j++) {
-                            String company = dis.readUTF();
-                            String url = dis.readUTF();
-                            Link link = new Link(company, url);
-                            int positionCount = dis.readInt();
-                            List<ExperienceInCompany.Position> positionList = new ArrayList<>();
-                            for (int k = 0; k < positionCount; k++) {
-                                LocalDate stDate = DateUtil.of(dis.readInt(), Month.of(dis.readInt()));
-                                LocalDate endDate = DateUtil.of(dis.readInt(), Month.of(dis.readInt()));
-                                String title = dis.readUTF();
-                                String description = dis.readUTF();
-                                positionList.add(k, new ExperienceInCompany.Position(stDate, endDate, title, description));
-                            }
-                            experienceInCompanies.add(j, new ExperienceInCompany(link, positionList));
-                        }
-                        sections.put(sectionType, new SectionExperience(experienceInCompanies));
+                    case "ru.javawebinar.basejava.model.SectionExperience":
+
+                        SectionExperience sectionExperience = new SectionExperience(
+                                readList(dis, new MyReader<ExperienceInCompany>() {
+                                    @Override
+                                    public ExperienceInCompany read() throws IOException {
+                                        return new ExperienceInCompany(
+                                                new Link(dis.readUTF(), dis.readUTF()),
+                                                DataStreamStrategyImpl.this.readList(dis, new MyReader<ExperienceInCompany.Position>() {
+                                                    @Override
+                                                    public ExperienceInCompany.Position read() throws IOException {
+                                                        LocalDate stDate = DateUtil.of(dis.readInt(), Month.of(dis.readInt()));
+                                                        LocalDate endDate = DateUtil.of(dis.readInt(), Month.of(dis.readInt()));
+                                                        String title = dis.readUTF();
+                                                        String description = dis.readUTF();
+                                                        return new ExperienceInCompany.Position(stDate, endDate, title, description);
+                                                    }
+                                                })
+                                        );
+                                    }
+                                })
+                        );
+
+                        sections.put(sectionType, sectionExperience);
                         break;
                 }
             }
