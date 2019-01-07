@@ -95,7 +95,7 @@ public class DataStreamStrategyImpl implements SerializationStrategy {
                         resume.addSection(sectionType, new SectionExperience(
                                 readList(dis, () -> new ExperienceInCompany(
                                         new Link(dis.readUTF(), dis.readUTF()),
-                                        DataStreamStrategyImpl.this.readList(dis, () -> {
+                                        readList(dis, () -> {
                                             LocalDate stDate = DateUtil.of(dis.readInt(), Month.of(dis.readInt()));
                                             LocalDate endDate = DateUtil.of(dis.readInt(), Month.of(dis.readInt()));
                                             String title = dis.readUTF();
@@ -135,7 +135,7 @@ public class DataStreamStrategyImpl implements SerializationStrategy {
     }
 
 
-    private <K extends Enum<K>, V> void readMap(DataInputStream dis, MyReaderForMap myReaderForMap) throws IOException {
+    private void readMap(DataInputStream dis, MyReaderForMap myReaderForMap) throws IOException {
         int size = dis.readInt();
         for (int i = 0; i < size; i++) {
             myReaderForMap.read();
